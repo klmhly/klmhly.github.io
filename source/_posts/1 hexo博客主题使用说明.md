@@ -6,44 +6,27 @@ categories: 博客搭建
 记录hexo搭建所需的环境，以及主要过程。
 <!-- more -->
 
-## 1. 说明
-## 2. 安装环境
+
+## 安装环境
 >需要保证电脑安装了以下环境，才能搭建和使用hexo博客
 - Node      安装地址：[官网](https://nodejs.org/zh-cn/)
 - Git  安装地址：[官网](https://git-scm.com/)
 - Hexo
  1. 创建文件夹，例如BLOG（用来存放博客）
+ 2. 在git bash终端输入安装命令：`$ npm i -g hexo`
+ 3. 查看安装版本：`npm -v`
 
- 2. 在git bash终端输入安装命令：
- ```bash
- $ npm i -g hexo    
- ```
- 3. 查看安装版本：
- ```bash
- $ npm -v    
- ```
-## 3. 本地配置过程
+## 本地配置过程
 >确保第2步需要安装的环境均已安装，然后开始搭建博客。
 
-### 进入博客目录初始化hexo
-```bash
-$ hexo init
-```
-### 清空缓存
-```bash
-$ hexo cl
-```
-### 编译生成
-```bash
-$ hexo g
-```
-### 开启服务
-```bash
-$ hexo s
-```
+- 进入博客目录初始化hexo：`hexo init`
+- 清空缓存：`hexo cl`
+- 编译生成：`hexo g`
+- 开启服务：`hexo s`
+
 这一步做完，可以在浏览器输入http://localhost:4000,如果可以看到页面则已经在本地搭建好了博客
 
-## 4. 使用github托管
+## 使用github托管
 
 - 获取本电脑的ssh： 
 `bash
