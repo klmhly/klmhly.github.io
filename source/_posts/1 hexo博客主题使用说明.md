@@ -1,6 +1,10 @@
 ---
 title: Hexo博客搭建说明
 categories: 博客搭建
+tags: 
+- Hexo
+- Git
+- Node
 ---
 
 记录hexo搭建所需的环境，以及主要过程。
@@ -9,6 +13,7 @@ categories: 博客搭建
 
 ## 安装环境
 >需要保证电脑安装了以下环境，才能搭建和使用hexo博客
+
 - Node      安装地址：[官网](https://nodejs.org/zh-cn/)
 - Git  安装地址：[官网](https://git-scm.com/)
 - Hexo
