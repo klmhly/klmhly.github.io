@@ -17,6 +17,7 @@ tags:
 - Node      安装地址：[官网](https://nodejs.org/zh-cn/)
 - Git  安装地址：[官网](https://git-scm.com/)
 - Hexo
+
  1. 创建文件夹，例如BLOG（用来存放博客）
  2. 在git bash终端输入安装命令：`$ npm i -g hexo`
  3. 查看安装版本：`npm -v`
