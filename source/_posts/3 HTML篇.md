@@ -1,8 +1,8 @@
 ---
-title: "HTML Fundamentals"
+title: HTML 篇
 date: 2018-12-07 12:20:56
 categories: 
-- Web
+- WEB
 tags: 
 - HTML
 ---
@@ -140,7 +140,71 @@ HTML、URI/URL、HTTP
 
 ---
 
-## 六、图片和对象
+## 六、表单
+### 1. input - 文本输入域
+- 单行文本域: `<input type="text" >`
+- E-mail 地址域: `<input type="email">`
+- 密码域: `<input type="password">`
+- 搜索域: `<input type="search">`
+- 电话号码域: `<input type="tel">`
+- URL域: `<input type="url">`
+
+### 2. textarea - 多行文本域
+- 多行文本域: `<textarea cols="30" rows="10"></textarea>`
+
+### 3. select - 选择框
+- 一个选择框
+```
+<select id="simple" name="simple">
+  <option>Banana</option>
+  <option>Cherry</option>
+  <option>Lemon</option>
+</select>
+```
+- 多选选择框
+```
+<select multiple id="multi" name="multi">
+  <option>Banana</option>
+  <option>Cherry</option>
+  <option>Lemon</option>
+</select>
+```
+
+### 4. datalist - 自动补全输入框
+```
+<input name="myfruit" type="text" list="fruit"> 
+<datalist id = "fruit">
+   <option value="">apple</option>
+    <option value="">banana</option>
+    <option value="">orange</option>
+    <option value="">pear</option>
+</datalist>
+
+```
+
+### 5. checked - 选中项
+- 复选框：`<input type="checkbox" checked value="apple">`
+- 单选按钮：`<input type="radio" checked name="1" value="meal"`
+同一组的选项name相同
+
+### 6. 一个完整例子
+```
+<form action="/my-handling-form-page" method="post">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" />
+    </div>
+    <div>
+        <label for="mail">E-mail:</label>
+        <input type="email" id="mail" />
+    </div>
+    <div>
+        <label for="msg">Message:</label>
+        <textarea id="msg"></textarea>
+    </div>
+</form>
+```
+## 七、图片和对象
 ### 1. 图片
 - <img\> - 插入图片
 
