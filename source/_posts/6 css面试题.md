@@ -133,13 +133,13 @@ tags:
 
 ### 8. 元素竖向的百分比设定是相对于容器的高度吗？
 
-- 都是相对于父容器的**宽度**
+>都是相对于父容器的**宽度**
 
 当按百分比设定一个元素的宽度时，它是相对于父容器的宽度计算的，但是，对于一些表示竖向距离的属性，例如 padding-top , padding-bottom , margin-top , margin-bottom 等，当按百分比设定它们时，依据的也是父容器的宽度，而不是高度。
 
 ### 9. 对line-height是如何理解的？
-
 >行高是指一行文字的高度，具体说是两行文字间基线的距离。CSS中起高度作用的是height和line-height，没有定义height属性，最终其表现作用一定是line-height。
+
 - 单行文本垂直居中：把line-height值设置为height一样大小的值可以实现单行文字的垂直居中，其实也可以把height删除。
 - 多行文本垂直居中：需要设置display属性为inline-block。
 
@@ -295,7 +295,7 @@ display属性规定元素应该生成的框的类型；position属性规定元�
 
 ### 26. 对BFC规范(块级格式化上下文：block formatting context)的理解？
 
-> BFC规定了内部的Block Box如何布局。
+> BFC规定了内部的Block Box如何布局。BFC是一个独立的布局环境，其中的元素布局是不受外界的影响，并且在一个BFC中，块盒与行盒（行盒由一行中所有的内联元素所组成）都会垂直的沿着其父元素的边框排列。
 
 定位方案：
 - 内部的Box会在垂直方向上一个接一个放置。
@@ -312,6 +312,13 @@ display属性规定元素应该生成的框的类型；position属性规定元�
 - display的值为inline-block、table-cell、table-caption
 - position的值为absolute或fixed
 
+BFC作用：
+- 清除浮动 父元素，`overflow: hidden;`，就编程BFC
+- 避免文字环绕
+- 防止margin重叠
+
+>因为BFC内部的元素和外部的元素绝对不会互相影响，因此， 当BFC外部存在浮动时，它不应该影响BFC内部Box的布局，BFC会通过变窄，而不与浮动有重叠。同样的，当BFC内部有浮动时，为了不影响外部元素的布局，BFC计算高度时会包括浮动的高度。避免margin重叠也是这样的一个道理。
+
 ### 27. 上下margin重合的问题
 
 在重合元素外包裹一层容器，并触发该容器生成一个BFC。
@@ -320,8 +327,7 @@ display属性规定元素应该生成的框的类型；position属性规定元�
 ```html
 <div class="aside"></div>
 <div class="text"> 
-    <div class="main">
-    </div>
+    <div class="main"></div>
 </div><!--下面是css代码-->
 ```
 ```css
@@ -337,13 +343,8 @@ background: #fcc; }
 
 .text{
 
-/*盒子main的外面包一个div，
+/*盒子main的外面包一个div，通过改变此div的属性使两个盒子分属于两个不同的BFC，以此来阻止margin重叠*/
 
-通过改变此div的属性使两个
-
-盒子分属于两个不同的BFC，
-
-以此来阻止margin重叠*/
 overflow: hidden;
 //此时已经触发了BFC属性。
 }
