@@ -1,5 +1,5 @@
 ---
-title: 1 Hexo博客搭建说明
+title: '1 Hexo博客搭建说明'
 categories: 博客搭建
 tags: 
 - Hexo
