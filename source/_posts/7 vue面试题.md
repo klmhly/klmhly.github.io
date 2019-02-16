@@ -29,8 +29,6 @@ Vue的核心的功能，是一个视图模板引擎，但这不是说Vue就不�
 
 >声明式渲染的基础上，组件系统——客户端路由——大规模状态管理的构建工具。
 
-![1694678-7c218f421c1aafab.png](https://upload-images.jianshu.io/upload_images/11152416-ff79cd7da2e05f0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 ### 2. MVVM的理解
 >MVVM 是 Model-View-ViewModel 的缩写。
 
