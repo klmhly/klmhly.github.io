@@ -151,4 +151,41 @@ sessionStorage.clear();​//清空localStorage中所有信息
 - js文件放在尾部或者异步
 - 尽量避免內联样式
 
+### 9. HTML5有哪些新特性,移除了那些元素？
+
+新增加了图像、位置、存储、多任务等功能。
+新增元素：
+
+- canvas
+- 用于媒介回放的video和audio元素
+- 本地离线存储。localStorage长期存储数据，浏览器关闭后数据不丢失;sessionStorage的数据在浏览器关闭后自动删除
+- 语意化更好的内容元素，比如 article footer header nav section
+- 位置API：Geolocation
+- 表单控件，calendar date time email url search
+- 新的技术：web worker(web worker是运行在后台的 JavaScript，独立于其他脚本，不会影响页面的性能。您可以继续做任何愿意做的事情：点击、选取内容等等，而此时 web worker 在后台运行) web socket
+- 拖放API：drag、drop
+
+移除的元素：
+
+- 纯表现的元素：basefont big center font s strike tt u
+- 性能较差元素：frame frameset noframes
+
+
+
+### 9. 简述一下你对HTML语义化的理解？
+
+去掉或丢失样式的时候能够让页面呈现出清晰的结构。
+有利于SEO和搜索引擎建立良好沟通，有助于爬虫抓取更多的信息，爬虫依赖于标签来确定上下文和各个关键字的权重。
+方便其它设备解析。
+便于团队开发和维护，语义化根据可读性。
+
+### 10. webpack 和 gulp 的区别？
+
+webpack是一个模块打包器，强调的是一个前端模块化方案，更侧重模块打包，我们可以把开发中的所有资源都看成是模块，通过loader和plugin对资源进行处理。
+
+gulp是一个前端自动化构建工具，强调的是前端开发的工作流程，可以通过配置一系列的task，第一task处理的事情（如代码压缩，合并，编译以及浏览器实时更新等）。然后定义这些执行顺序，来让glup执行这些task，从而构建项目的整个开发流程。自动化构建工具并不能把所有的模块打包到一起，也不能构建不同模块之间的依赖关系。
+
+
+
+
 
