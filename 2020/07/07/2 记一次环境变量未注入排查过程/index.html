@@ -62,7 +62,7 @@
 
 
 
-  <meta name="keywords" content="Node,环境变量,Next build,">
+  <meta name="keywords" content="环境变量,Node,Next build,">
 
 
 
@@ -74,14 +74,14 @@
 
 
 <meta name="description" content="记一次环境变量未注入到uat环境的解决过程。">
-<meta name="keywords" content="Node,环境变量,Next build">
+<meta name="keywords" content="环境变量,Node,Next build">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Bug】记一次环境变量未注入排查过程">
 <meta property="og:url" content="http://yoursite.com/2020/07/07/2 记一次环境变量未注入排查过程/index.html">
 <meta property="og:site_name" content="Murphy&#39;s Blog">
 <meta property="og:description" content="记一次环境变量未注入到uat环境的解决过程。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-08T07:57:15.728Z">
+<meta property="og:updated_time" content="2020-07-20T13:01:32.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Bug】记一次环境变量未注入排查过程">
 <meta name="twitter:description" content="记一次环境变量未注入到uat环境的解决过程。">
@@ -395,6 +395,7 @@
 <p>这里面提到不同的注入变量的方法： set 、cross-env 、export<br>发现如果后面跟的是构建命令， 则用export来注入， 如果是node index.js等文件就直接用cross-env注入</p>
 <p>按照这样的思路尝试改一下sit 和 uat注入变量的方式，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;scripts&quot; : &#123;</span><br><span class="line">    &quot;start&quot;: &quot;cross-env NODE_ENV=development DEPLOY_ENV=dev nodemon server/index.js&quot;,</span><br><span class="line">    &quot;sit&quot;: &quot;export NODE_ENV=production DEPLOY_ENV=sit &amp;&amp; next build &amp;&amp; export DEPLOY_ENV=sit gulp&quot;,</span><br><span class="line">    &quot;uat&quot;: &quot;export NODE_ENV=production DEPLOY_ENV=uat &amp;&amp; next build &amp;&amp; export DEPLOY_ENV=uat gulp&quot;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>再次测试果然，可以正确的拿到对应的环境变量了，进行发布，也成功拿到环境变量了</p>
+<h3 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h3><p>后来，Jade 讲到他对我们项目的脚手架进行了更新，可以使用cross-env正常拿到环境变量了。<br>cross-env 后面只能定义一个环境变量<br>NODE_ENV=production 已经在next框架默认设置了，无需额外注入<br>这样试了一下，也可以拿到环境变量了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;scripts&quot; : &#123;</span><br><span class="line">    &quot;build&quot;: &quot;node task/index.js &amp;&amp; next build&quot;,</span><br><span class="line">    &quot;sit&quot;: &quot;cross-env DEPLOY_ENV=sit npm run build &amp;&amp; cross-env DEPLOY_ENV=sit gulp&quot;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>这次找环境配置问题， 发现自己还是对运行环境、部署环境、服务端的知识有很大的欠缺。<br>但是get到了更好的解决问题的方式， 顺藤摸瓜，本地模拟测试环境、搜索关键词、查文档等，还有细心</p>
 
       
@@ -457,9 +458,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Node/" rel="tag"># Node</a>
-          
             <a href="/tags/环境变量/" rel="tag"># 环境变量</a>
+          
+            <a href="/tags/Node/" rel="tag"># Node</a>
           
             <a href="/tags/Next-build/" rel="tag"># Next build</a>
           
@@ -645,7 +646,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录排查过程"><span class="nav-number">2.</span> <span class="nav-text">记录排查过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题描述"><span class="nav-number">2.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-首先去检查-site-的-uat地址是否配错"><span class="nav-number">2.2.</span> <span class="nav-text">1 首先去检查 site 的 uat地址是否配错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-然后在当前文件打印env"><span class="nav-number">2.3.</span> <span class="nav-text">2 然后在当前文件打印env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-排查配置文件package-json-的script脚本"><span class="nav-number">2.4.</span> <span class="nav-text">3 排查配置文件package.json 的script脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-需要查一下next文档"><span class="nav-number">2.5.</span> <span class="nav-text">4 需要查一下next文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-google【关键词】（next-cross-env-process-env-DEPLOY-ENV-undeifined）"><span class="nav-number">2.6.</span> <span class="nav-text">5 google【关键词】（next cross-env process.env.DEPLOY_ENV undeifined）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">3.</span> <span class="nav-text">思考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录排查过程"><span class="nav-number">2.</span> <span class="nav-text">记录排查过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题描述"><span class="nav-number">2.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-首先去检查-site-的-uat地址是否配错"><span class="nav-number">2.2.</span> <span class="nav-text">1 首先去检查 site 的 uat地址是否配错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-然后在当前文件打印env"><span class="nav-number">2.3.</span> <span class="nav-text">2 然后在当前文件打印env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-排查配置文件package-json-的script脚本"><span class="nav-number">2.4.</span> <span class="nav-text">3 排查配置文件package.json 的script脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-需要查一下next文档"><span class="nav-number">2.5.</span> <span class="nav-text">4 需要查一下next文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-google【关键词】（next-cross-env-process-env-DEPLOY-ENV-undeifined）"><span class="nav-number">2.6.</span> <span class="nav-text">5 google【关键词】（next cross-env process.env.DEPLOY_ENV undeifined）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后续"><span class="nav-number">2.7.</span> <span class="nav-text">后续</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">3.</span> <span class="nav-text">思考</span></a></li></ol></div>
             
 
           </div>
