@@ -62,7 +62,7 @@
 
 
 
-  <meta name="keywords" content="Murphy's Blog">
+  <meta name="keywords" content="Webpack,动态引入,">
 
 
 
@@ -73,16 +73,18 @@
 
 
 
-<meta name="description" content="我是最棒的吖~">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Murphy&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/tags/Hexo/index.html">
+<meta name="description" content="记一个本地运行正常，打包后报错的问题解决。">
+<meta name="keywords" content="Webpack,动态引入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Bug】动态引入组件的打包报错问题">
+<meta property="og:url" content="http://yoursite.com/2020/07/20/3 动态加载组件的webpack配置/index.html">
 <meta property="og:site_name" content="Murphy&#39;s Blog">
-<meta property="og:description" content="我是最棒的吖~">
+<meta property="og:description" content="记一个本地运行正常，打包后报错的问题解决。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-07-20T12:34:26.586Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Murphy&#39;s Blog">
-<meta name="twitter:description" content="我是最棒的吖~">
+<meta name="twitter:title" content="【Bug】动态引入组件的打包报错问题">
+<meta name="twitter:description" content="记一个本地运行正常，打包后报错的问题解决。">
 
 
 
@@ -112,13 +114,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/Hexo/">
+  <link rel="canonical" href="http://yoursite.com/2020/07/20/3 动态加载组件的webpack配置/">
 
 
 
 
 
-  <title>标签: Hexo | Murphy's Blog</title>
+  <title>【Bug】动态引入组件的打包报错问题 | Murphy's Blog</title>
   
 
 
@@ -137,7 +139,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband">
     </div>
     
@@ -260,52 +262,226 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Hexo<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/3 动态加载组件的webpack配置/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Murphy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://upload-images.jianshu.io/upload_images/11152416-86dc3a91b20447be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Murphy's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2020/07/07/1 hexo博客主题使用说明/" itemprop="url">
-              
-                <span itemprop="name">1 Hexo博客搭建说明</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">【Bug】动态引入组件的打包报错问题</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-07-07T19:29:42+08:00" content="2020-07-07">
-          07-07
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-20T20:21:27+08:00">
+                2020-07-20
+              </time>
+            
 
-    </header>
-  </article>
+          
 
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记一个本地运行正常，打包后报错的问题解决。<br><a id="more"></a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在项目里需要动态引入一个组件，在componentDidMount事件中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import(&apos;xxx&apos;).then((x) =&gt; &#123;</span><br><span class="line">  // 传入组件配置</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>引入组件后，本地运行，可以正常使用，然后进行打包，发到测试环境。</p>
+<p>浏览器报一些 函数未定义等的bug。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>S1,  webpeck.prod.config 的mode改为 development; </p>
+<p>S2, 安装这个插件，版本要在2.2.0以上， “babel-plugin-dynamic-import-node”: “^2.2.0”</p>
+<p>S3, 在webpack里面配置对应的babel-loader的设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.js$/,</span><br><span class="line">        exclude: /node_modules|bower_components/,</span><br><span class="line">        use: &#123;</span><br><span class="line">          loader: &apos;babel-loader&apos;,</span><br><span class="line">          options: &#123;</span><br><span class="line">            presets: [&apos;env&apos;, &apos;stage-0&apos;, &apos;react&apos;],</span><br><span class="line">            plugins: [</span><br><span class="line">              [&apos;dynamic-import-node&apos;, &#123; &apos;noInterop&apos;: true &#125;]    //webpack设置</span><br><span class="line">            ]</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      ...</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>目前觉得这个修改了mode值，是不太好的做法。还需要后续继续跟进更深的原因<br>暂时先这样记录一下了。</p>
 
       
     </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+            -------------本文结束
+            <i class="fa fa-paw"></i>
+            感谢您的阅读-------------
+        </div>
+    
+</div>
 
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请我吃辣条吖~</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatreward.png" alt="Murphy 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipayreward.png" alt="Murphy 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Webpack/" rel="tag"># Webpack</a>
+          
+            <a href="/tags/动态引入/" rel="tag"># 动态引入</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/07/2 记一次环境变量未注入排查过程/" rel="next" title="【Bug】记一次环境变量未注入排查过程">
+                <i class="fa fa-chevron-left"></i> 【Bug】记一次环境变量未注入排查过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -313,6 +489,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -335,8 +515,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -421,6 +610,22 @@
       </section>
 
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">1.1.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -548,6 +753,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
