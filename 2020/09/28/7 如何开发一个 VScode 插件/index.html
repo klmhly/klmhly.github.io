@@ -81,12 +81,12 @@
 <meta property="og:site_name" content="Murphy&#39;s Blog">
 <meta property="og:description" content="记录如何开发一个 VS code 插件的过程">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://jiaxiaoyu.cn/vscode_extention_dic">
-<meta property="og:updated_time" content="2020-10-21T11:26:22.683Z">
+<meta property="og:image" content="http://jiaxiaoyu.cn/vscode_extention_dic.png">
+<meta property="og:updated_time" content="2020-10-21T12:21:54.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何开发一个 VScode 插件">
 <meta name="twitter:description" content="记录如何开发一个 VS code 插件的过程">
-<meta name="twitter:image" content="http://jiaxiaoyu.cn/vscode_extention_dic">
+<meta name="twitter:image" content="http://jiaxiaoyu.cn/vscode_extention_dic.png">
 
 
 
@@ -423,7 +423,7 @@
 </li>
 </ol>
 <h2 id="开发一个简单插件"><a href="#开发一个简单插件" class="headerlink" title="开发一个简单插件"></a>开发一个简单插件</h2><h5 id="首先，安装脚手架"><a href="#首先，安装脚手架" class="headerlink" title="首先，安装脚手架"></a>首先，安装脚手架</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yo code     // 目录结构如下图</span><br></pre></td></tr></table></figure>
-<p><img src="http://jiaxiaoyu.cn/vscode_extention_dic" alt="yo 安装的脚手架开发插件"></p>
+<p><img src="http://jiaxiaoyu.cn/vscode_extention_dic.png" alt="yo 安装的脚手架开发插件"></p>
 <h5 id="主要文件："><a href="#主要文件：" class="headerlink" title="主要文件："></a>主要文件：</h5><ul>
 <li><p>Extension.js 是项目的入口文件</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vscode模块包含了 </span></span><br><span class="line"><span class="keyword">const</span> &#123; exec &#125; = <span class="built_in">require</span>(<span class="string">'child_process'</span>);</span><br><span class="line"><span class="keyword">const</span> vscode = <span class="built_in">require</span>(<span class="string">'vscode'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;vscode.ExtensionContext&#125; context</span></span><br><span class="line"><span class="comment"> * 仅插件被激活时调用一次</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">activate</span>(<span class="params">context</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 注册命令:helloWorld,  这个就是插件的功能，弹出一个提示框</span></span><br><span class="line">	<span class="keyword">let</span> disposable = vscode.commands.registerCommand(<span class="string">'directory.helloWorld'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		vscode.window.setStatusBarMessage(<span class="string">'你好，前端艺术家！'</span>);</span><br><span class="line">		vscode.window.showInformationMessage(<span class="string">'拍了拍你的肱二头肌，并询问是否要打开博客？'</span>, <span class="string">'是'</span>, <span class="string">'否'</span>, <span class="string">'不再提示'</span>).then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">			<span class="keyword">if</span>(result === <span class="string">'是'</span>) &#123;</span><br><span class="line">				exec(<span class="string">`open https://klmhly.github.io`</span>)</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				vscode.window.showInformationMessage(<span class="string">'祝你有个美好的工作日！'</span>)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	context.subscriptions.push(disposable);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">exports.activate = activate;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deactivate</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">	activate,</span><br><span class="line">	deactivate</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -446,13 +446,72 @@
 <li>主要配置在<code>package.json</code></li>
 <li>对<code>package.json</code>里面定义的事件，进行注册，处理函数即可实现功能</li>
 </ul>
-<h2 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h2><h4 id="通知和状态栏类"><a href="#通知和状态栏类" class="headerlink" title="通知和状态栏类"></a>通知和状态栏类</h4><h4 id="修改当前激活编辑器内容"><a href="#修改当前激活编辑器内容" class="headerlink" title="修改当前激活编辑器内容"></a>修改当前激活编辑器内容</h4><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><p><a href="https://juejin.im/entry/6844903640826642440" target="_blank" rel="noopener">https://juejin.im/entry/6844903640826642440</a></p>
+<h2 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h2><h4 id="1-通知和状态栏"><a href="#1-通知和状态栏" class="headerlink" title="1. 通知和状态栏"></a>1. 通知和状态栏</h4><blockquote>
+<p>可以弹出提示框</p>
+</blockquote>
+<ul>
+<li><p>Info 信息框</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vscode.window.showInformationMessage(&apos;我是info信息！&apos;);</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html</a></p>
+<li><p>自定义带回掉函数的信息提示框</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vscode.window.showInformationMessage(&apos;是否打开博客&apos;, &apos;是&apos;, &apos;否&apos;, &apos;不再提示&apos;).then(result =&gt; &#123;</span><br><span class="line">	if (result === &apos;是&apos;) &#123;</span><br><span class="line">		exec(`open &apos;https:/klmhly.github.io&apos;`);</span><br><span class="line">	&#125; else if (result === &apos;不再提示&apos;) &#123;</span><br><span class="line">		// 其它操作</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><a href="https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6" target="_blank" rel="noopener">https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6</a></p>
+<li><p>Info 错误提示框</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vscode.window.showErrorMessage(&apos;我是错误信息！&apos;);</span><br></pre></td></tr></table></figure>
 </li>
+</ul>
+<h4 id="2-修改当前激活编辑器内容"><a href="#2-修改当前激活编辑器内容" class="headerlink" title="2. 修改当前激活编辑器内容"></a>2. 修改当前激活编辑器内容</h4><p>待补充</p>
+<h4 id="3-package-json-的两个主要配置"><a href="#3-package-json-的两个主要配置" class="headerlink" title="3. package.json 的两个主要配置"></a>3. package.json 的两个主要配置</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">		<span class="string">"activationEvents"</span>: [</span><br><span class="line">      	<span class="string">"onCommand:directory.helloWorld"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"main"</span>: <span class="string">"./extension.js"</span>,</span><br><span class="line">    <span class="string">"contributes"</span>: &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="activationEvents-激活事件-有如下："><a href="#activationEvents-激活事件-有如下：" class="headerlink" title="activationEvents  (激活事件 有如下：)"></a>activationEvents  (激活事件 有如下：)</h4><ul>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onLanguage" target="_blank" rel="noopener"><code>onLanguage</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onCommand" target="_blank" rel="noopener"><code>onCommand</code></a> 在输入命令时触发（示例上就是这种方式）</li>
+<li><code>*</code>  每当VS Code启动时，都会发出*激活事件</li>
+<li><code>onDebug</code><ul>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onDebugInitialConfigurations" target="_blank" rel="noopener"><code>onDebugInitialConfigurations</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onDebugResolve" target="_blank" rel="noopener"><code>onDebugResolve</code></a></li>
+</ul>
+</li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#workspaceContains" target="_blank" rel="noopener"><code>workspaceContains</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onFileSystem" target="_blank" rel="noopener"><code>onFileSystem</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onView" target="_blank" rel="noopener"><code>onView</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onUri" target="_blank" rel="noopener"><code>onUri</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onWebviewPanel" target="_blank" rel="noopener"><code>onWebviewPanel</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onCustomEditor" target="_blank" rel="noopener"><code>onCustomEditor</code></a> </li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onStartupFinished" target="_blank" rel="noopener"><code>onStartupFinished</code></a></li>
+</ul>
+<h4 id="contributes-（贡献点）的可配置项如下"><a href="#contributes-（贡献点）的可配置项如下" class="headerlink" title="contributes （贡献点）的可配置项如下"></a>contributes （贡献点）的可配置项如下</h4><ul>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.configuration" target="_blank" rel="noopener"><code>configuration</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.configurationDefaults" target="_blank" rel="noopener"><code>configurationDefaults</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.commands" target="_blank" rel="noopener"><code>commands</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.menus" target="_blank" rel="noopener"><code>menus</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.keybindings" target="_blank" rel="noopener"><code>keybindings</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.languages" target="_blank" rel="noopener"><code>languages</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.debuggers" target="_blank" rel="noopener"><code>debuggers</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.breakpoints" target="_blank" rel="noopener"><code>breakpoints</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.grammars" target="_blank" rel="noopener"><code>grammars</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.themes" target="_blank" rel="noopener"><code>themes</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.iconThemes" target="_blank" rel="noopener"><code>iconThemes</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.productIconThemes" target="_blank" rel="noopener"><code>productIconThemes</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.snippets" target="_blank" rel="noopener"><code>snippets</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.jsonValidation" target="_blank" rel="noopener"><code>jsonValidation</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.views" target="_blank" rel="noopener"><code>views</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.viewsWelcome" target="_blank" rel="noopener"><code>viewsWelcome</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.viewsContainers" target="_blank" rel="noopener"><code>viewsContainers</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.problemMatchers" target="_blank" rel="noopener"><code>problemMatchers</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.problemPatterns" target="_blank" rel="noopener"><code>problemPatterns</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.taskDefinitions" target="_blank" rel="noopener"><code>taskDefinitions</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.colors" target="_blank" rel="noopener"><code>colors</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.typescriptServerPlugins" target="_blank" rel="noopener"><code>typescriptServerPlugins</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.resourceLabelFormatters" target="_blank" rel="noopener"><code>resourceLabelFormatters</code></a></li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><p>【快速入门博客】<a href="https://juejin.im/entry/6844903640826642440" target="_blank" rel="noopener">https://juejin.im/entry/6844903640826642440</a></p>
+</li>
+<li><p>【<a href="https://www.cnblogs.com/liuxianan/" target="_blank" rel="noopener">小茗同学的博客园</a>】<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html</a></p>
+</li>
+<li><p>【js liang 的github】<a href="https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6" target="_blank" rel="noopener">https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6</a></p>
+</li>
+<li>【vs code api】 <a href="https://code.visualstudio.com/api/references/vscode-api" target="_blank" rel="noopener">https://code.visualstudio.com/api/references/vscode-api</a></li>
 </ul>
 
       
@@ -699,7 +758,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">2.</span> <span class="nav-text">安装环境</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#环境是进行开发的前置条件"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">环境是进行开发的前置条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建发布账号"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">创建发布账号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#开发和发布命令"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">开发和发布命令</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#开发一个简单插件"><span class="nav-number">3.</span> <span class="nav-text">开发一个简单插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#首先，安装脚手架"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">首先，安装脚手架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#主要文件："><span class="nav-number">3.0.0.2.</span> <span class="nav-text">主要文件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#开发总结"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">开发总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用API"><span class="nav-number">4.</span> <span class="nav-text">常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通知和状态栏类"><span class="nav-number">4.0.1.</span> <span class="nav-text">通知和状态栏类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改当前激活编辑器内容"><span class="nav-number">4.0.2.</span> <span class="nav-text">修改当前激活编辑器内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">2.</span> <span class="nav-text">安装环境</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#环境是进行开发的前置条件"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">环境是进行开发的前置条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建发布账号"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">创建发布账号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#开发和发布命令"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">开发和发布命令</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#开发一个简单插件"><span class="nav-number">3.</span> <span class="nav-text">开发一个简单插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#首先，安装脚手架"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">首先，安装脚手架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#主要文件："><span class="nav-number">3.0.0.2.</span> <span class="nav-text">主要文件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#开发总结"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">开发总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用API"><span class="nav-number">4.</span> <span class="nav-text">常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-通知和状态栏"><span class="nav-number">4.0.1.</span> <span class="nav-text">1. 通知和状态栏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-修改当前激活编辑器内容"><span class="nav-number">4.0.2.</span> <span class="nav-text">2. 修改当前激活编辑器内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-package-json-的两个主要配置"><span class="nav-number">4.0.3.</span> <span class="nav-text">3. package.json 的两个主要配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#activationEvents-激活事件-有如下："><span class="nav-number">4.0.4.</span> <span class="nav-text">activationEvents  (激活事件 有如下：)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#contributes-（贡献点）的可配置项如下"><span class="nav-number">4.0.5.</span> <span class="nav-text">contributes （贡献点）的可配置项如下</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></div>
             
 
           </div>
