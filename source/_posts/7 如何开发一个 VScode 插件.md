@@ -23,6 +23,7 @@ tags:
 
 
 
+
 ## 安装环境
 
 ##### 环境是进行开发的前置条件
@@ -97,7 +98,7 @@ tags:
 yo code     // 目录结构如下图
 ```
 
-![yo 安装的脚手架开发插件](http://jiaxiaoyu.cn/vscode_extention_dic)
+![yo 安装的脚手架开发插件](http://jiaxiaoyu.cn/vscode_extention_dic.png)
 
 ##### 主要文件：
 
@@ -202,17 +203,96 @@ yo code     // 目录结构如下图
 
 ## 常用API
 
-#### 通知和状态栏类
+#### 1. 通知和状态栏
 
-#### 修改当前激活编辑器内容
+> 可以弹出提示框
+
+- Info 信息框
+
+  ```
+  vscode.window.showInformationMessage('我是info信息！');
+  ```
+
+- 自定义带回掉函数的信息提示框
+
+  ```
+  vscode.window.showInformationMessage('是否打开博客', '是', '否', '不再提示').then(result => {
+  	if (result === '是') {
+  		exec(`open 'https:/klmhly.github.io'`);
+  	} else if (result === '不再提示') {
+  		// 其它操作
+  	}
+  });
+  ```
+
+- Info 错误提示框
+
+  ```
+  vscode.window.showErrorMessage('我是错误信息！');
+  ```
 
 
 
+#### 2. 修改当前激活编辑器内容
+
+待补充
 
 
 
+#### 3. package.json 的两个主要配置
 
+```javascript
+{
+		"activationEvents": [
+      	"onCommand:directory.helloWorld"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+    }
+}
+```
 
+#### activationEvents  (激活事件 有如下：)
+
+- [`onLanguage`](https://code.visualstudio.com/api/references/activation-events#onLanguage)
+- [`onCommand`](https://code.visualstudio.com/api/references/activation-events#onCommand) 在输入命令时触发（示例上就是这种方式）
+- `*`  每当VS Code启动时，都会发出*激活事件
+- `onDebug`
+  - [`onDebugInitialConfigurations`](https://code.visualstudio.com/api/references/activation-events#onDebugInitialConfigurations)
+  - [`onDebugResolve`](https://code.visualstudio.com/api/references/activation-events#onDebugResolve)
+- [`workspaceContains`](https://code.visualstudio.com/api/references/activation-events#workspaceContains)
+- [`onFileSystem`](https://code.visualstudio.com/api/references/activation-events#onFileSystem)
+- [`onView`](https://code.visualstudio.com/api/references/activation-events#onView)
+- [`onUri`](https://code.visualstudio.com/api/references/activation-events#onUri)
+- [`onWebviewPanel`](https://code.visualstudio.com/api/references/activation-events#onWebviewPanel)
+- [`onCustomEditor`](https://code.visualstudio.com/api/references/activation-events#onCustomEditor) 
+- [`onStartupFinished`](https://code.visualstudio.com/api/references/activation-events#onStartupFinished)
+
+#### contributes （贡献点）的可配置项如下
+
+- [`configuration`](https://code.visualstudio.com/api/references/contribution-points#contributes.configuration)
+- [`configurationDefaults`](https://code.visualstudio.com/api/references/contribution-points#contributes.configurationDefaults)
+- [`commands`](https://code.visualstudio.com/api/references/contribution-points#contributes.commands)
+- [`menus`](https://code.visualstudio.com/api/references/contribution-points#contributes.menus)
+- [`keybindings`](https://code.visualstudio.com/api/references/contribution-points#contributes.keybindings)
+- [`languages`](https://code.visualstudio.com/api/references/contribution-points#contributes.languages)
+- [`debuggers`](https://code.visualstudio.com/api/references/contribution-points#contributes.debuggers)
+- [`breakpoints`](https://code.visualstudio.com/api/references/contribution-points#contributes.breakpoints)
+- [`grammars`](https://code.visualstudio.com/api/references/contribution-points#contributes.grammars)
+- [`themes`](https://code.visualstudio.com/api/references/contribution-points#contributes.themes)
+- [`iconThemes`](https://code.visualstudio.com/api/references/contribution-points#contributes.iconThemes)
+- [`productIconThemes`](https://code.visualstudio.com/api/references/contribution-points#contributes.productIconThemes)
+- [`snippets`](https://code.visualstudio.com/api/references/contribution-points#contributes.snippets)
+- [`jsonValidation`](https://code.visualstudio.com/api/references/contribution-points#contributes.jsonValidation)
+- [`views`](https://code.visualstudio.com/api/references/contribution-points#contributes.views)
+- [`viewsWelcome`](https://code.visualstudio.com/api/references/contribution-points#contributes.viewsWelcome)
+- [`viewsContainers`](https://code.visualstudio.com/api/references/contribution-points#contributes.viewsContainers)
+- [`problemMatchers`](https://code.visualstudio.com/api/references/contribution-points#contributes.problemMatchers)
+- [`problemPatterns`](https://code.visualstudio.com/api/references/contribution-points#contributes.problemPatterns)
+- [`taskDefinitions`](https://code.visualstudio.com/api/references/contribution-points#contributes.taskDefinitions)
+- [`colors`](https://code.visualstudio.com/api/references/contribution-points#contributes.colors)
+- [`typescriptServerPlugins`](https://code.visualstudio.com/api/references/contribution-points#contributes.typescriptServerPlugins)
+- [`resourceLabelFormatters`](https://code.visualstudio.com/api/references/contribution-points#contributes.resourceLabelFormatters)
 
 
 
@@ -222,9 +302,10 @@ yo code     // 目录结构如下图
 
 ## 参考
 
-- https://juejin.im/entry/6844903640826642440
+- 【快速入门博客】https://juejin.im/entry/6844903640826642440
 
-- https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html
+- 【[小茗同学的博客园](https://www.cnblogs.com/liuxianan/)】https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html
 
-- https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6
+- 【js liang 的github】https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6
+- 【vs code api】 https://code.visualstudio.com/api/references/vscode-api
 
