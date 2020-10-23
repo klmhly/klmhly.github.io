@@ -98,7 +98,7 @@ tags:
 yo code     // 目录结构如下图
 ```
 
-![yo 安装的脚手架开发插件](http://jiaxiaoyu.cn/vscode_extention_dic.png)
+![yo 安装的脚手架开发插件](https://picture.jiaxiaoyu.cn/vscode_extention_dic.png)
 
 ##### 主要文件：
 
@@ -303,9 +303,7 @@ yo code     // 目录结构如下图
 ## 参考
 
 - 【快速入门博客】https://juejin.im/entry/6844903640826642440
-
 - 【[小茗同学的博客园](https://www.cnblogs.com/liuxianan/)】https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html
-
-- 【js liang 的github】https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6
+- 【jsliang的github】https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6
 - 【vs code api】 https://code.visualstudio.com/api/references/vscode-api
 
