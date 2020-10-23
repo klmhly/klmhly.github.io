@@ -81,14 +81,14 @@
 <meta property="og:site_name" content="Murphy&#39;s Blog">
 <meta property="og:description" content="总结在h5社交分享功能的实现">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://qgcc1xwa6.hn-bkt.clouddn.com/122.png">
-<meta property="og:image" content="http://qgcc1xwa6.hn-bkt.clouddn.com/share">
+<meta property="og:image" content="https://picture.jiaxiaoyu.cn/122.png">
+<meta property="og:image" content="https://picture.jiaxiaoyu.cn/share.png">
 <meta property="og:image" content="http://qgcc1xwa6.hn-bkt.clouddn.com/debug">
-<meta property="og:updated_time" content="2020-09-10T12:31:33.118Z">
+<meta property="og:updated_time" content="2020-10-23T02:51:13.151Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="H5分享功能">
 <meta name="twitter:description" content="总结在h5社交分享功能的实现">
-<meta name="twitter:image" content="http://qgcc1xwa6.hn-bkt.clouddn.com/122.png">
+<meta name="twitter:image" content="https://picture.jiaxiaoyu.cn/122.png">
 
 
 
@@ -379,8 +379,8 @@
 <li><strong>相关概念（开放图谱，分享调试器）</strong></li>
 <li><strong>各种分享的注意事项</strong></li>
 </ol>
-<h2 id="背景需求"><a href="#背景需求" class="headerlink" title="背景需求"></a>背景需求</h2><p>将活动链接以及关键字分享到主流社交媒介，是推广活动的一种有效方式<br><img src="http://qgcc1xwa6.hn-bkt.clouddn.com/122.png" alt="logo"></p>
-<p>如何定制化分享卡片【重点】<br><img src="http://qgcc1xwa6.hn-bkt.clouddn.com/share" alt="share"></p>
+<h2 id="背景需求"><a href="#背景需求" class="headerlink" title="背景需求"></a>背景需求</h2><p>将活动链接以及关键字分享到主流社交媒介，是推广活动的一种有效方式<br><img src="https://picture.jiaxiaoyu.cn/122.png" alt="logo"></p>
+<p>如何定制化分享卡片【重点】<br><img src="https://picture.jiaxiaoyu.cn/share.png" alt="share"></p>
 <h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ol>
 <li><p>在项目的入口html文件加入以下meta元素<br>这谢保证了本网站能够被分享的时候，爬虫爬到信息去定制化卡片</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">   &lt;!-- facebook, whatsapp, messenger, Linkedin--&gt;</span><br><span class="line">   &lt;meta property=<span class="string">"fb:app_id"</span>        content=<span class="string">"654251068316377"</span> /&gt;</span><br><span class="line">   &lt;meta property=<span class="string">"og:url"</span>           content=<span class="string">"http://if-sit-src.zatech.com/if/html-template-file/share/share.html"</span> /&gt;</span><br><span class="line">   &lt;meta property=<span class="string">"og:type"</span>          content=<span class="string">"website"</span> /&gt;</span><br><span class="line">   &lt;meta property=<span class="string">"og:title"</span>         content=<span class="string">"title haha"</span> /&gt;</span><br><span class="line">   &lt;meta property=<span class="string">"og:description"</span>   content=<span class="string">"description haha"</span> /&gt;</span><br><span class="line">&lt;meta property=<span class="string">"og:image"</span> itemprop=<span class="string">"image"</span> content=<span class="string">"http://pollosweb.wesped.es/programa_pollos/play.png"</span>&gt;</span><br><span class="line">   &lt;meta name=<span class="string">"twitter:title"</span>   content=<span class="string">"my twitter title"</span> /&gt;</span><br><span class="line">   &lt;meta name=<span class="string">"twitter:description"</span>   content=<span class="string">"my twitter description"</span> /&gt;</span><br><span class="line">   &lt;meta name=<span class="string">"twitter:image"</span> content=<span class="string">"@ViewBag.ShareImg"</span> /&gt;</span><br><span class="line">   &lt;meta name=<span class="string">"twitter:card"</span> content=<span class="string">"summary"</span> /&gt;</span><br><span class="line">   &lt;meta name=<span class="string">"twitter:url"</span>   content=<span class="string">"当前分享的链接--可要可不要"</span> /&gt;</span><br></pre></td></tr></table></figure>

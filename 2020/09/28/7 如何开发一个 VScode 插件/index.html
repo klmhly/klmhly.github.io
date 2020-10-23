@@ -81,12 +81,12 @@
 <meta property="og:site_name" content="Murphy&#39;s Blog">
 <meta property="og:description" content="记录如何开发一个 VS code 插件的过程">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://jiaxiaoyu.cn/vscode_extention_dic.png">
-<meta property="og:updated_time" content="2020-10-21T12:21:54.730Z">
+<meta property="og:image" content="https://picture.jiaxiaoyu.cn/vscode_extention_dic.png">
+<meta property="og:updated_time" content="2020-10-23T02:51:49.648Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何开发一个 VScode 插件">
 <meta name="twitter:description" content="记录如何开发一个 VS code 插件的过程">
-<meta name="twitter:image" content="http://jiaxiaoyu.cn/vscode_extention_dic.png">
+<meta name="twitter:image" content="https://picture.jiaxiaoyu.cn/vscode_extention_dic.png">
 
 
 
@@ -423,7 +423,7 @@
 </li>
 </ol>
 <h2 id="开发一个简单插件"><a href="#开发一个简单插件" class="headerlink" title="开发一个简单插件"></a>开发一个简单插件</h2><h5 id="首先，安装脚手架"><a href="#首先，安装脚手架" class="headerlink" title="首先，安装脚手架"></a>首先，安装脚手架</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yo code     // 目录结构如下图</span><br></pre></td></tr></table></figure>
-<p><img src="http://jiaxiaoyu.cn/vscode_extention_dic.png" alt="yo 安装的脚手架开发插件"></p>
+<p><img src="https://picture.jiaxiaoyu.cn/vscode_extention_dic.png" alt="yo 安装的脚手架开发插件"></p>
 <h5 id="主要文件："><a href="#主要文件：" class="headerlink" title="主要文件："></a>主要文件：</h5><ul>
 <li><p>Extension.js 是项目的入口文件</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vscode模块包含了 </span></span><br><span class="line"><span class="keyword">const</span> &#123; exec &#125; = <span class="built_in">require</span>(<span class="string">'child_process'</span>);</span><br><span class="line"><span class="keyword">const</span> vscode = <span class="built_in">require</span>(<span class="string">'vscode'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;vscode.ExtensionContext&#125; context</span></span><br><span class="line"><span class="comment"> * 仅插件被激活时调用一次</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">activate</span>(<span class="params">context</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 注册命令:helloWorld,  这个就是插件的功能，弹出一个提示框</span></span><br><span class="line">	<span class="keyword">let</span> disposable = vscode.commands.registerCommand(<span class="string">'directory.helloWorld'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		vscode.window.setStatusBarMessage(<span class="string">'你好，前端艺术家！'</span>);</span><br><span class="line">		vscode.window.showInformationMessage(<span class="string">'拍了拍你的肱二头肌，并询问是否要打开博客？'</span>, <span class="string">'是'</span>, <span class="string">'否'</span>, <span class="string">'不再提示'</span>).then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">			<span class="keyword">if</span>(result === <span class="string">'是'</span>) &#123;</span><br><span class="line">				exec(<span class="string">`open https://klmhly.github.io`</span>)</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				vscode.window.showInformationMessage(<span class="string">'祝你有个美好的工作日！'</span>)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	context.subscriptions.push(disposable);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">exports.activate = activate;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deactivate</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">	activate,</span><br><span class="line">	deactivate</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -505,12 +505,9 @@
 <li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.resourceLabelFormatters" target="_blank" rel="noopener"><code>resourceLabelFormatters</code></a></li>
 </ul>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><p>【快速入门博客】<a href="https://juejin.im/entry/6844903640826642440" target="_blank" rel="noopener">https://juejin.im/entry/6844903640826642440</a></p>
-</li>
-<li><p>【<a href="https://www.cnblogs.com/liuxianan/" target="_blank" rel="noopener">小茗同学的博客园</a>】<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html</a></p>
-</li>
-<li><p>【js liang 的github】<a href="https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6" target="_blank" rel="noopener">https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6</a></p>
-</li>
+<li>【快速入门博客】<a href="https://juejin.im/entry/6844903640826642440" target="_blank" rel="noopener">https://juejin.im/entry/6844903640826642440</a></li>
+<li>【<a href="https://www.cnblogs.com/liuxianan/" target="_blank" rel="noopener">小茗同学的博客园</a>】<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html</a></li>
+<li>【jsliang的github】<a href="https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6" target="_blank" rel="noopener">https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6</a></li>
 <li>【vs code api】 <a href="https://code.visualstudio.com/api/references/vscode-api" target="_blank" rel="noopener">https://code.visualstudio.com/api/references/vscode-api</a></li>
 </ul>
 
