@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="182f28f9-e24b-48b3-aa98-6ac6a6c17355" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/0 目录.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/2 学习规划.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/3 HTML篇.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/4 HTML5 篇.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/5 html面试题.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/6 css面试题.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/7 vue面试题.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/_posts/8 操作系统.md" beforeDir="false" />
-    </list>
+    <list default="true" id="182f28f9-e24b-48b3-aa98-6ac6a6c17355" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -264,12 +254,12 @@
       <workItem from="1547263934429" duration="25501000" />
       <workItem from="1547454925426" duration="2072000" />
       <workItem from="1555415031316" duration="70000" />
-      <workItem from="1556786145179" duration="224000" />
+      <workItem from="1556786145179" duration="306000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27867000" />
+    <option name="totallyTimeSpent" value="27949000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="120" y="130" width="1211" height="658" extended-state="0" />
