@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=5.1.4">
+
+
+
+
+
+
+
+  <meta name="keywords" content="Node,环境变量,Next build,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="记一次环境变量未注入到uat环境的解决过程。">
+<meta name="keywords" content="Node,环境变量,Next build">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Bug】记一次环境变量未注入排查过程">
+<meta property="og:url" content="http://yoursite.com/2024/07/20/2 记一次环境变量未注入排查过程/index.html">
+<meta property="og:site_name" content="Murphy&#39;s Blog">
+<meta property="og:description" content="记一次环境变量未注入到uat环境的解决过程。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2024-07-20T01:34:02.465Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Bug】记一次环境变量未注入排查过程">
+<meta name="twitter:description" content="记一次环境变量未注入到uat环境的解决过程。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2024/07/20/2 记一次环境变量未注入排查过程/">
+
+
+
+
+
+  <title>【Bug】记一次环境变量未注入排查过程 | Murphy's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband">
+    </div>
+    
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Murphy's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">为了更好的吃喝玩乐，要坚持不懈的敲代码吖~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+
+<script>
+
+    window.onload = function(){
+        var path = 'https://malizhi.cn'; //这里要改成你博客的地址
+        var localhostItem = String(window.location).split(path)[1];
+        var LiNode = document.querySelectorAll('#menu > li > a')
+
+        for(var i = 0; i< LiNode.length;i++){
+            var item = String(LiNode[i].href).split(path)[1];
+            if(item == localhostItem && item != undefined){
+                LiNode[i].setAttribute('style','border-bottom:1px solid black');
+            }
+        }
+    };
+
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/07/20/2 记一次环境变量未注入排查过程/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Murphy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://upload-images.jianshu.io/upload_images/11152416-86dc3a91b20447be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Murphy's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【Bug】记一次环境变量未注入排查过程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-07-20T09:34:02+08:00">
+                2024-07-20
+              </time>
+            
+
+          
+
+
+          
+
+            
+
+         
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记一次环境变量未注入到uat环境的解决过程。<br><a id="more"></a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>一个使用Next框架的项目里，通过<code>cross-env NODE_ENV=production DEPLOY_ENV=uat</code> 注入全局变量, 在uat环境和sit环境下网页客户端刷新无法取得这个注入的值</p>
+<p>感谢 evan 同学的帮忙</p>
+<h2 id="记录排查过程"><a href="#记录排查过程" class="headerlink" title="记录排查过程"></a>记录排查过程</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>项目的src目录下封装了一个可以跳到自己公司其他站点的函数site，并且跳转地址会区分环境.例如在本站点的uat地址进行操做跳转到另一个站点’abc’，也会跳到对应的环境 ‘<a href="https://uat.abc.com&#39;。但是，在uat的地址进行操作发现跳到&#39;abc&#39;网站的dev地址，" target="_blank" rel="noopener">https://uat.abc.com&#39;。但是，在uat的地址进行操作发现跳到&#39;abc&#39;网站的dev地址，</a> 于是开始进行排查</p>
+<p>site的大致定义如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import &#123; getPrePath &#125; from &apos;./index&apos;</span><br><span class="line">const env = process.env.DEPLOY_ENV || &apos;prd&apos;</span><br><span class="line"></span><br><span class="line">export default function outerUrl (name) &#123;</span><br><span class="line">  const prePath = getPrePath()</span><br><span class="line">  const urls = &#123;</span><br><span class="line">    dev: &#123;</span><br><span class="line">      abc: &apos;https://dev.abc.com&apos; + prePath,</span><br><span class="line">      def: &apos;https://dev.def.com&apos; + prePath,</span><br><span class="line">    &#125;,</span><br><span class="line">    sit: &#123;</span><br><span class="line">      abc: &apos;https://sit.abc.com&apos; + prePath,</span><br><span class="line">      def: &apos;https://sit.def.com&apos; + prePath,</span><br><span class="line">    &#125;,</span><br><span class="line">    uat: &#123;</span><br><span class="line">      abc: &apos;https://uat.abc.com&apos; + prePath,</span><br><span class="line">      def: &apos;https://uat.def.com&apos; + prePath,</span><br><span class="line">    &#125;,</span><br><span class="line">    prd: &#123;</span><br><span class="line">      abc: &apos;https://prd.abc.com&apos; + prePath,</span><br><span class="line">      prd: &apos;https://prd.def.com&apos; + prePath,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-首先去检查-site-的-uat地址是否配错"><a href="#1-首先去检查-site-的-uat地址是否配错" class="headerlink" title="1 首先去检查 site 的 uat地址是否配错"></a>1 首先去检查 site 的 uat地址是否配错</h3><p>经检查， uat地址配置正确</p>
+<h3 id="2-然后在当前文件打印env"><a href="#2-然后在当前文件打印env" class="headerlink" title="2 然后在当前文件打印env"></a>2 然后在当前文件打印env</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const env = process.env.DEPLOY_ENV || &apos;prd&apos;</span><br><span class="line">console.log(&apos;env---------------&apos;, env)</span><br></pre></td></tr></table></figure>
+<p>在本地打印env, 结果是dev。这是没错的，就无法看出问题所在，于是把代码发到uat环境，访问uat地址查看打印效果。</p>
+<p>结果uat环境也打印出的是dev。</p>
+<p>那说明可能是哪个地方配置错了</p>
+<h3 id="3-排查配置文件package-json-的script脚本"><a href="#3-排查配置文件package-json-的script脚本" class="headerlink" title="3 排查配置文件package.json 的script脚本"></a>3 排查配置文件package.json 的script脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;scripts&quot; : &#123;</span><br><span class="line">    &quot;start&quot;: &quot;cross-env NODE_ENV=development DEPLOY_ENV=dev nodemon server/index.js&quot;,</span><br><span class="line">    &quot;build&quot;: &quot;next build&quot;,</span><br><span class="line">    &quot;prod&quot;: &quot;cross-env NODE_ENV=production DEPLOY_ENV=sit node server/index.js&quot;,</span><br><span class="line">    &quot;sit&quot;: &quot;cross-env NODE_ENV=production DEPLOY_ENV=sit &amp;&amp; next build &amp;&amp; export DEPLOY_ENV=sit gulp&quot;,</span><br><span class="line">    &quot;uat&quot;: &quot;export NODE_ENV=production DEPLOY_ENV=uat &amp;&amp; next build &amp;&amp; export DEPLOY_ENV=uat gulp&quot;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行npm start, 其是是可以拿到 <code>process.env.DEPLOY_ENV</code>的值的</p>
+<p>那么，需要在本地模拟出sit环境的构建过程，也就是执行 <code>npm run build</code> 和 <code>npm run prod</code>,  执行这里发现打印出的还是dev</p>
+<p>搜代码中所有可能出现dev的地方，然后将其改成其他字符， 在本地执行构建命令，发现改了好几个地方，构建的打印还是dev。</p>
+<p>直到 改了 next.config.js 文件里面的一个dev改成’dev23’, 执行sit构建 <code>npm run build</code> 和 <code>npm run prod</code>,打印中终于发生了变化， 是’dev23’<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">env: &#123;</span><br><span class="line">      DEPLOY_ENV: process.env.DEPLOY_ENV || &apos;dev23&apos;</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure></p>
+<p>到此，初步定位出问题所在。<br>Next框架的配置文件<code>next.config.js</code>无法获取到注入的全局变量。</p>
+<h3 id="4-需要查一下next文档"><a href="#4-需要查一下next文档" class="headerlink" title="4 需要查一下next文档"></a>4 需要查一下next文档</h3><p><code>next build</code> 以及  <code>next.config.js</code> 都做了什么 ？</p>
+<p><code>next.config.js</code>可以进行许多打包构建等的配置，<code>next build</code>会执行并生成构建好的文件输出到你配置的路径下面。<br>其中<code>next.config.js</code> 的 env 可以给客户端注入全局变量， site函数拿到的正是这个全局变量的默认值。为什么这里<code>process.env.DEPLOY_ENV</code>没有成功赋值呢， 又要回到注入这个全局变量的地方看一下<br>发现上一步 <code>&quot;build&quot;: &quot;next build&quot;,</code>  执行build时根本没有注入变量，于是修改配置文件为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;scripts&quot; : &#123;</span><br><span class="line">    &quot;start&quot;: &quot;cross-env NODE_ENV=development DEPLOY_ENV=dev nodemon server/index.js&quot;,</span><br><span class="line">    &quot;build&quot;: &quot;cross-env NODE_ENV=production DEPLOY_ENV=sit &amp;&amp; next build&quot;, // 主要是这里修改</span><br><span class="line">    &quot;prod&quot;: &quot;cross-env NODE_ENV=production DEPLOY_ENV=sit node server/index.js&quot;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再次执行<code>npm run build</code>和<code>npm run prod</code>模拟sit环境，<code>next.config.js</code> 文件打印的<code>process.env.DEPLOY_ENV</code>是undefined，也就是说这个环境变量还是没有注入</p>
+<h3 id="5-google【关键词】（next-cross-env-process-env-DEPLOY-ENV-undeifined）"><a href="#5-google【关键词】（next-cross-env-process-env-DEPLOY-ENV-undeifined）" class="headerlink" title="5 google【关键词】（next cross-env process.env.DEPLOY_ENV undeifined）"></a>5 google【关键词】（next cross-env process.env.DEPLOY_ENV undeifined）</h3><p>搜索问题关键词， 这是很重要的一步。</p>
+<p>在这个网页中看到了一些类似的问题<br><a href="https://stackoverflow.com/questions/11104028/process-env-node-env-is-undefined/38948727" target="_blank" rel="noopener">https://stackoverflow.com/questions/11104028/process-env-node-env-is-undefined/38948727</a></p>
+<blockquote>
+<p>in package.json we have to config like below (works in Linux and Mac OS)<br>the important thing is “export NODE_ENV=production” after your build commands below is an example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;  </span><br><span class="line">     &quot;start&quot;: &quot;export NODE_ENV=production &amp;&amp; npm run build &amp;&amp; npm run start-server&quot;,</span><br><span class="line">     &quot;dev&quot;: &quot;export NODE_ENV=dev &amp;&amp; npm run build &amp;&amp; npm run start-server&quot;,</span><br><span class="line"></span><br><span class="line">     //</span><br><span class="line">     &quot;start&quot;: &quot;cross-env NODE_ENV=dev node your-app-name.js&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>这里面提到不同的注入变量的方法： set 、cross-env 、export<br>发现如果后面跟的是构建命令， 则用export来注入， 如果是node index.js等文件就直接用cross-env注入</p>
+<p>按照这样的思路尝试改一下sit 和 uat注入变量的方式，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;scripts&quot; : &#123;</span><br><span class="line">    &quot;start&quot;: &quot;cross-env NODE_ENV=development DEPLOY_ENV=dev nodemon server/index.js&quot;,</span><br><span class="line">    &quot;sit&quot;: &quot;export NODE_ENV=production DEPLOY_ENV=sit &amp;&amp; next build &amp;&amp; export DEPLOY_ENV=sit gulp&quot;,</span><br><span class="line">    &quot;uat&quot;: &quot;export NODE_ENV=production DEPLOY_ENV=uat &amp;&amp; next build &amp;&amp; export DEPLOY_ENV=uat gulp&quot;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再次测试果然，可以正确的拿到对应的环境变量了，进行发布，也成功拿到环境变量了</p>
+<h3 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h3><p>后来，Jade 讲到他对我们项目的脚手架进行了更新，可以使用cross-env正常拿到环境变量了。<br>cross-env 后面只能定义一个环境变量<br>NODE_ENV=production 已经在next框架默认设置了，无需额外注入<br>这样试了一下，也可以拿到环境变量了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;scripts&quot; : &#123;</span><br><span class="line">    &quot;build&quot;: &quot;node task/index.js &amp;&amp; next build&quot;,</span><br><span class="line">    &quot;sit&quot;: &quot;cross-env DEPLOY_ENV=sit npm run build &amp;&amp; cross-env DEPLOY_ENV=sit gulp&quot;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>这次找环境配置问题， 发现自己还是对运行环境、部署环境、服务端的知识有很大的欠缺。<br>但是get到了更好的解决问题的方式， 顺藤摸瓜，本地模拟测试环境、搜索关键词、查文档等，还有细心</p>
+
+      
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+            -------------本文结束
+            <i class="fa fa-paw"></i>
+            感谢您的阅读-------------
+        </div>
+    
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请我吃辣条吖~</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatreward.png" alt="Murphy 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipayreward.png" alt="Murphy 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Node/" rel="tag"># Node</a>
+          
+            <a href="/tags/环境变量/" rel="tag"># 环境变量</a>
+          
+            <a href="/tags/Next-build/" rel="tag"># Next build</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/07/20/1 hexo博客主题使用说明/" rel="prev" title="1 Hexo博客搭建说明">
+                1 Hexo博客搭建说明 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://upload-images.jianshu.io/upload_images/11152416-86dc3a91b20447be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Murphy">
+            
+              <p class="site-author-name" itemprop="name">Murphy</p>
+              <p class="site-description motion-element" itemprop="description">我是最棒的吖~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/klmhly" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:2743163143@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/3892174015?is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录排查过程"><span class="nav-number">2.</span> <span class="nav-text">记录排查过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题描述"><span class="nav-number">2.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-首先去检查-site-的-uat地址是否配错"><span class="nav-number">2.2.</span> <span class="nav-text">1 首先去检查 site 的 uat地址是否配错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-然后在当前文件打印env"><span class="nav-number">2.3.</span> <span class="nav-text">2 然后在当前文件打印env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-排查配置文件package-json-的script脚本"><span class="nav-number">2.4.</span> <span class="nav-text">3 排查配置文件package.json 的script脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-需要查一下next文档"><span class="nav-number">2.5.</span> <span class="nav-text">4 需要查一下next文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-google【关键词】（next-cross-env-process-env-DEPLOY-ENV-undeifined）"><span class="nav-number">2.6.</span> <span class="nav-text">5 google【关键词】（next cross-env process.env.DEPLOY_ENV undeifined）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后续"><span class="nav-number">2.7.</span> <span class="nav-text">后续</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">3.</span> <span class="nav-text">思考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Murphy</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

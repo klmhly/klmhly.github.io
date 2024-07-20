@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=5.1.4">
+
+
+
+
+
+
+
+  <meta name="keywords" content="web,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="总结在h5社交分享功能的实现">
+<meta name="keywords" content="web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="H5分享功能">
+<meta property="og:url" content="http://yoursite.com/2024/07/20/6 h5分享功能/index.html">
+<meta property="og:site_name" content="Murphy&#39;s Blog">
+<meta property="og:description" content="总结在h5社交分享功能的实现">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://picture.jiaxiaoyu.cn/122.png">
+<meta property="og:image" content="https://picture.jiaxiaoyu.cn/share.png">
+<meta property="og:image" content="http://qgcc1xwa6.hn-bkt.clouddn.com/debug">
+<meta property="og:updated_time" content="2024-07-20T01:34:02.466Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="H5分享功能">
+<meta name="twitter:description" content="总结在h5社交分享功能的实现">
+<meta name="twitter:image" content="https://picture.jiaxiaoyu.cn/122.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2024/07/20/6 h5分享功能/">
+
+
+
+
+
+  <title>H5分享功能 | Murphy's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband">
+    </div>
+    
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Murphy's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">为了更好的吃喝玩乐，要坚持不懈的敲代码吖~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+
+<script>
+
+    window.onload = function(){
+        var path = 'https://malizhi.cn'; //这里要改成你博客的地址
+        var localhostItem = String(window.location).split(path)[1];
+        var LiNode = document.querySelectorAll('#menu > li > a')
+
+        for(var i = 0; i< LiNode.length;i++){
+            var item = String(LiNode[i].href).split(path)[1];
+            if(item == localhostItem && item != undefined){
+                LiNode[i].setAttribute('style','border-bottom:1px solid black');
+            }
+        }
+    };
+
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/07/20/6 h5分享功能/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Murphy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://upload-images.jianshu.io/upload_images/11152416-86dc3a91b20447be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Murphy's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">H5分享功能</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-07-20T09:34:02+08:00">
+                2024-07-20
+              </time>
+            
+
+          
+
+
+          
+
+            
+
+         
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/工作积累/" itemprop="url" rel="index">
+                    <span itemprop="name">工作积累</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>总结在h5社交分享功能的实现<br><a id="more"></a></p>
+<h2 id="目录大纲"><a href="#目录大纲" class="headerlink" title="目录大纲"></a>目录大纲</h2><ol>
+<li><strong>背景需求</strong></li>
+<li><strong>一个示例</strong></li>
+<li><strong>相关概念（开放图谱，分享调试器）</strong></li>
+<li><strong>各种分享的注意事项</strong></li>
+</ol>
+<h2 id="背景需求"><a href="#背景需求" class="headerlink" title="背景需求"></a>背景需求</h2><p>将活动链接以及关键字分享到主流社交媒介，是推广活动的一种有效方式<br><img src="https://picture.jiaxiaoyu.cn/122.png" alt="logo"></p>
+<p>如何定制化分享卡片【重点】<br><img src="https://picture.jiaxiaoyu.cn/share.png" alt="share"></p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ol>
+<li><p>在项目的入口html文件加入以下meta元素<br>这谢保证了本网站能够被分享的时候，爬虫爬到信息去定制化卡片</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">   &lt;!-- facebook, whatsapp, messenger, Linkedin--&gt;</span><br><span class="line">   &lt;meta property=<span class="string">"fb:app_id"</span>        content=<span class="string">"654251068316377"</span> /&gt;</span><br><span class="line">   &lt;meta property=<span class="string">"og:url"</span>           content=<span class="string">"http://if-sit-src.zatech.com/if/html-template-file/share/share.html"</span> /&gt;</span><br><span class="line">   &lt;meta property=<span class="string">"og:type"</span>          content=<span class="string">"website"</span> /&gt;</span><br><span class="line">   &lt;meta property=<span class="string">"og:title"</span>         content=<span class="string">"title haha"</span> /&gt;</span><br><span class="line">   &lt;meta property=<span class="string">"og:description"</span>   content=<span class="string">"description haha"</span> /&gt;</span><br><span class="line">&lt;meta property=<span class="string">"og:image"</span> itemprop=<span class="string">"image"</span> content=<span class="string">"http://pollosweb.wesped.es/programa_pollos/play.png"</span>&gt;</span><br><span class="line">   &lt;meta name=<span class="string">"twitter:title"</span>   content=<span class="string">"my twitter title"</span> /&gt;</span><br><span class="line">   &lt;meta name=<span class="string">"twitter:description"</span>   content=<span class="string">"my twitter description"</span> /&gt;</span><br><span class="line">   &lt;meta name=<span class="string">"twitter:image"</span> content=<span class="string">"@ViewBag.ShareImg"</span> /&gt;</span><br><span class="line">   &lt;meta name=<span class="string">"twitter:card"</span> content=<span class="string">"summary"</span> /&gt;</span><br><span class="line">   &lt;meta name=<span class="string">"twitter:url"</span>   content=<span class="string">"当前分享的链接--可要可不要"</span> /&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在需要分享的按钮写点击事件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// &lt;button onClick=&#123;handleShare&#125;&gt;Facebook分享&lt;/button&gt; ,以这个为例子，其他类似，只是不同分享途径的链接不同</span><br><span class="line">// shareLink 是你想要分享的站点地址</span><br><span class="line">function handleShare () &#123;</span><br><span class="line">  let jumpLink = &apos;https://www.facebook.com/sharer.php?u=&apos; + encodeURIComponent(shareLink)</span><br><span class="line">  window.open(jumpLink, &apos;_blank&apos;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="原理和探索"><a href="#原理和探索" class="headerlink" title="原理和探索"></a>原理和探索</h2><h3 id="开放图谱"><a href="#开放图谱" class="headerlink" title="开放图谱"></a>开放图谱</h3><p>Open Graph是一套由Facebook定义的mata协议，主要放在HTML的meta标签里，目前也可以在iOS和Android系统中使用。Open Graph想实现的目的也非常的简单，主要是期望使用人将互联网的各种事物联系起来。</p>
+<p>开放图谱对象包含属性。属性是指以不同方式描述对象的元素，这些元素由开放图谱标签表示，或在使用对象 API 创建的对象中赋予属性。</p>
+<p><strong>facebook, whatsapp, messenger, Linkedin</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- facebook, whatsapp, messenger, Linkedin--&gt;</span><br><span class="line">      &lt;meta property=<span class="string">"fb:app_id"</span>        content=<span class="string">"654251068316377"</span> /&gt;</span><br><span class="line">      &lt;meta property=<span class="string">"og:url"</span>           content=<span class="string">"http://if-sit-src.zatech.com/if/html-template-file/share/share.html"</span> /&gt;</span><br><span class="line">      &lt;meta property=<span class="string">"og:type"</span>          content=<span class="string">"website"</span> /&gt;</span><br><span class="line">      &lt;meta property=<span class="string">"og:title"</span>         content=<span class="string">"title haha"</span> /&gt;</span><br><span class="line">      &lt;meta property=<span class="string">"og:description"</span>   content=<span class="string">"description haha"</span> /&gt;</span><br><span class="line">			&lt;meta property=<span class="string">"og:image"</span> itemprop=<span class="string">"image"</span> content=<span class="string">"http://pollosweb.wesped.es/programa_pollos/play.png"</span>&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>twitter</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 推特 --&gt;</span><br><span class="line">      &lt;meta name=<span class="string">"twitter:title"</span>   content=<span class="string">"my twitter title"</span> /&gt;</span><br><span class="line">      &lt;meta name=<span class="string">"twitter:description"</span>   content=<span class="string">"my twitter description"</span> /&gt;</span><br><span class="line">      &lt;meta name=<span class="string">"twitter:image"</span> content=<span class="string">"@ViewBag.ShareImg"</span> /&gt;</span><br><span class="line">      &lt;meta name=<span class="string">"twitter:card"</span> content=<span class="string">"summary"</span> /&gt;</span><br><span class="line">      &lt;meta name=<span class="string">"twitter:url"</span>   content=<span class="string">"当前分享的链接--可要可不要"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="分享调试器"><a href="#分享调试器" class="headerlink" title="分享调试器"></a>分享调试器</h3><p>【Facebook】:<a href="https://developers.facebook.com/tools/debug/sharing/" target="_blank" rel="noopener">https://developers.facebook.com/tools/debug/sharing/</a></p>
+<p>【领英】：<a href="https://www.linkedin.com/post-inspector/inspect/" target="_blank" rel="noopener">https://www.linkedin.com/post-inspector/inspect/</a></p>
+<p>【微信】：微信开发者工具   </p>
+<p>示例： Facebook调试器结果（<a href="http://if-sit-src.zatech.com/if/html-template-file/share/share.html" target="_blank" rel="noopener">http://if-sit-src.zatech.com/if/html-template-file/share/share.html</a>）</p>
+<ol>
+<li>可以预览分享结果</li>
+<li>可以看查看分享的配置警告</li>
+<li>可以主动重新爬虫抓取</li>
+</ol>
+<p><img src="http://qgcc1xwa6.hn-bkt.clouddn.com/debug" alt="debug"></p>
+<h2 id="具体分享方式以及存在问题"><a href="#具体分享方式以及存在问题" class="headerlink" title="具体分享方式以及存在问题"></a>具体分享方式以及存在问题</h2><h3 id="facebook"><a href="#facebook" class="headerlink" title="facebook"></a>facebook</h3><p>链接：’<a href="https://www.facebook.com/sharer.php?u=" target="_blank" rel="noopener">https://www.facebook.com/sharer.php?u=</a>‘ + encodeURIComponent(link)</p>
+<ol>
+<li><p>图片抓取原则</p>
+<ul>
+<li>无论是用网址分享还是调用sdk弹出分享框， 都会优先取所分享的网址的meta定制的信息；</li>
+<li>所分享的网页如果没有相关的meta，那么则会用自己抓取符合的图片作为分享的logo</li>
+</ul>
+</li>
+<li><p>图片显示问题</p>
+</li>
+</ol>
+<p>如果图片过小,则预览时显示错误的图片，或不显示， 或显示正确设定的图片（不稳定）</p>
+<p>解决：<strong>图片不小于200*200， 且比例最好是1.9 ：1  [官方文档]</strong></p>
+<ol start="3">
+<li>缓存问题</li>
+</ol>
+<p>如果网站更换想要展示的缩略图，再次分享可能不起作用，展示的还是原来的图片</p>
+<p>原因： facebook<strong>默认会有1个月的缓存期</strong>，在一个月内若没有重新爬取，则会显示旧的。所以当网站有变更缩略图，需要主动去调试工具重新抓取1次即可。</p>
+<ol start="4">
+<li>第1个分享的人，会看不到缩略图</li>
+</ol>
+<p>因为爬虫需要先看到1次数据，所以默认第一次都不会显示定义的图片等</p>
+<p>解决： 可以自己先进行一次分享（作为第1次分享）</p>
+<ol start="5">
+<li>如果是SDk调用， 需要在facebook开发平台做配置（添加分享网址…）,以及发布开发平台上的项目</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.fbAsyncInit = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">          FB.init(&#123;</span><br><span class="line">            appId            : <span class="string">'654251068316377'</span>,</span><br><span class="line">            autoLogAppEvents : <span class="literal">true</span>,</span><br><span class="line">            xfbml            : <span class="literal">true</span>,</span><br><span class="line">            version          : <span class="string">'v4.0'</span></span><br><span class="line">          &#125;);</span><br><span class="line">          FB.AppEvents.logPageView();</span><br><span class="line">        &#125;;</span><br><span class="line">        (<span class="function"><span class="keyword">function</span>(<span class="params">d, s, id</span>)</span>&#123;</span><br><span class="line">          <span class="keyword">var</span> js, fjs = d.getElementsByTagName(s)[<span class="number">0</span>];</span><br><span class="line">          <span class="keyword">if</span> (d.getElementById(id)) &#123;<span class="keyword">return</span>;&#125;</span><br><span class="line">          js = d.createElement(s); js.id = id;</span><br><span class="line">          js.src = <span class="string">"https://connect.facebook.net/en_US/sdk.js"</span>;</span><br><span class="line">          fjs.parentNode.insertBefore(js, fjs);</span><br><span class="line">        &#125;(<span class="built_in">document</span>, <span class="string">'script'</span>, <span class="string">'facebook-jssdk'</span>));</span><br><span class="line">      &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">      &lt;script async defer src="https:/</span><span class="regexp">/connect.facebook.net/</span>en_US/sdk.js<span class="string">"&gt;&lt;/script&gt; --&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="messenger-打开app分享"><a href="#messenger-打开app分享" class="headerlink" title="messenger  [打开app分享]"></a>messenger  [打开app分享]</h3><p>Step1:   定义og的开放图谱</p>
+<p>Step2:   fb-messenger协议调起系统应用： </p>
+<p> ‘fb-messenger://share?link=’ + encodeURIComponent(link) + ‘&amp;app_id=1234’</p>
+<p>注意： 图片大小和facebook规则一致</p>
+<pre><code>所分享的link需要编码
+</code></pre><h3 id="whatsapp-打开app分享"><a href="#whatsapp-打开app分享" class="headerlink" title="whatsapp [打开app分享]"></a>whatsapp [打开app分享]</h3><p>Step1:   定义og的开放图谱</p>
+<p>Step2:    协议，’whatsapp://send?text=’ + encodeURIComponent(link)</p>
+<p>注意： <strong>图片小于300kb，</strong></p>
+<pre><code>**图片大于300 * 200 像素**
+</code></pre><p> <strong>缓存问题</strong>，重试需要重启whatsapp应用</p>
+<h3 id="复制链接分享"><a href="#复制链接分享" class="headerlink" title="复制链接分享"></a>复制链接分享</h3><p>利用浏览器可以复制表单元素，制造表单元素，将需要复制的链接作为value</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">handleCopy (text, cbSuccess, cbError) &#123;</span><br><span class="line">    text = text || <span class="string">'https://languapp.com/url/abc'</span></span><br><span class="line">    <span class="keyword">const</span> $input = <span class="built_in">document</span>.createElement(<span class="string">'input'</span>)</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild($input)</span><br><span class="line">    $input.setAttribute(<span class="string">'value'</span>, text)</span><br><span class="line">    $input.select()</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">document</span>.execCommand(<span class="string">'copy'</span>)) &#123;</span><br><span class="line">      <span class="built_in">document</span>.execCommand(<span class="string">'copy'</span>)</span><br><span class="line">      cbSuccess()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">document</span>.body.removeChild($input)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二维码"><a href="#二维码" class="headerlink" title="二维码"></a>二维码</h3><p> 将所需要分享的链接生成二维码即可</p>
+<h3 id="twitter"><a href="#twitter" class="headerlink" title="twitter"></a>twitter</h3><ol>
+<li>开放图谱</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 推特 --&gt;</span><br><span class="line">      &lt;meta name=<span class="string">"twitter:title"</span>   content=<span class="string">"my twitter title"</span> /&gt;</span><br><span class="line">      &lt;meta name=<span class="string">"twitter:description"</span>   content=<span class="string">"my twitter description"</span> /&gt;</span><br><span class="line">      &lt;meta name=<span class="string">"twitter:image"</span> content=<span class="string">"@ViewBag.ShareImg"</span> /&gt;</span><br><span class="line">      &lt;meta name=<span class="string">"twitter:card"</span> content=<span class="string">"summary"</span> /&gt;</span><br><span class="line">      &lt;meta name=<span class="string">"twitter:url"</span>   content=<span class="string">"当前分享的链接--可要可不要"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>链接： ‘<a href="http://twitter.com/share?url=" target="_blank" rel="noopener">http://twitter.com/share?url=</a>‘ + link</li>
+</ol>
+<h3 id="Linkedin"><a href="#Linkedin" class="headerlink" title="Linkedin"></a>Linkedin</h3><pre><code>链接形式： og开放图谱 + 链接
+
+              &apos;[http://www.linkedin.com/shareArticle?url=](http://www.linkedin.com/shareArticle?url=)&apos; + link
+</code></pre><p> SDK:  发起POST 请求, 官方有配置参数说明<a href="https://api.linkedin.com/v2/ugcPosts" target="_blank" rel="noopener">https://api.linkedin.com/v2/ugcPosts</a></p>
+<p> 两种形式均可实现定制化</p>
+<p> <strong>表现形式</strong>：在pc自动调起网页</p>
+<pre><code>在h5自动调起App
+</code></pre><h3 id="pinterest"><a href="#pinterest" class="headerlink" title="pinterest"></a>pinterest</h3><pre><code>使用： &lt;script&gt;脚本 + 链接
+
+脚本： &lt;script type=&quot;text/javascript&quot; async src=&quot;[//assets.pinterest.com/js/pinit.js](notion://assets.pinterest.com/js/pinit.js)&quot;&gt;&lt;/script&gt;
+
+链接：&apos;[https://www.pinterest.com/pin/create/button/?url=](https://www.pinterest.com/pin/create/button/?url=)&apos; + link
+</code></pre><h3 id="新浪微博"><a href="#新浪微博" class="headerlink" title="新浪微博"></a>新浪微博</h3><pre><code>链接： &apos;[http://v.t.sina.com.cn/share/share.php?appkey=4120396272&amp;title=](http://v.t.sina.com.cn/share/share.php?appkey=4120396272&amp;title=)&apos; + encodeURIComponent(jumpTitle)+ &apos;&amp;url=&apos; + encodeURIComponent(link)
+
+暂时缩略图无效
+</code></pre><h3 id="qq空间"><a href="#qq空间" class="headerlink" title="qq空间"></a>qq空间</h3><p>注意： 需要在跳转链接后面直接加配置参数， 不识别og开放图谱</p>
+<pre><code>**title， pics， summary 参数 来实现定制化功能**
+</code></pre><p>链接： ‘<a href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;" target="_blank" rel="noopener">https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;</a> + link + ‘?sharesource=qzone&amp;title=haha&amp;pics=’ + imgLink + ‘&amp;summary=desc’</p>
+<p>break;</p>
+<h3 id="Tumblr"><a href="#Tumblr" class="headerlink" title="Tumblr"></a>Tumblr</h3><pre><code>可以读开放图谱设置定制化分享信息
+</code></pre><p>jumpLink = ‘<a href="http://tumblr.com/widgets/share/tool?canonicalUrl=" target="_blank" rel="noopener">http://tumblr.com/widgets/share/tool?canonicalUrl=</a>‘ + encodeURIComponent(link)</p>
+<p>可配置官方按钮+分享计数</p>
+<p>参考官方链接： <a href="https://www.tumblr.com/docs/zh/share_button" target="_blank" rel="noopener">https://www.tumblr.com/docs/zh/share_button</a></p>
+<h3 id="Reddit"><a href="#Reddit" class="headerlink" title="Reddit"></a>Reddit</h3><pre><code>不支持开放图谱
+</code></pre><p>需要在链接后面配置参数：resubmit    &amp;&amp;    title   </p>
+<p>不支持图片，仅分享标题和链接</p>
+<p>jumpLink = ‘<a href="https://www.reddit.com/r/gaming/submit?url=" target="_blank" rel="noopener">https://www.reddit.com/r/gaming/submit?url=</a>‘ + encodeURIComponent(link) + ‘&amp;resubmit=true&amp;title=’ + ‘hello, test title’</p>
+<h3 id="微信-朋友圈-qq"><a href="#微信-朋友圈-qq" class="headerlink" title="微信  / 朋友圈 /qq"></a>微信  / 朋友圈 /qq</h3><pre><code>分享的链接必须是js安全域名里中所包含
+
+Step1:  需要企业号，需确保已获得使用对应JS接口的权限
+</code></pre><p>Step2: 配置可访问的域名</p>
+<p>Step3:  代码层面</p>
+<p>1，引入微信JS-SKD      <script src="[http://res.wx.qq.com/open/js/jweixin-1.4.0.js](http://res.wx.qq.com/open/js/jweixin-1.4.0.js)">   </script></p>
+<p>2，定义分享卡片参数     //参考微信公众平台</p>
+<p>3，wx.config({})      //配置微信公众平台的必填参数</p>
+<p>4，wx.ready(function(){ // wx.调用对应的方法 })   // 参考微信公众平台</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">wechat (link) &#123;</span><br><span class="line">        <span class="comment">// 定制的分享内容卡片</span></span><br><span class="line">        <span class="keyword">let</span> shareContent = &#123;</span><br><span class="line">          imgUrl: <span class="string">"http://pollosweb.wesped.es/programa_pollos/play.png"</span>, <span class="comment">//分享图，默认当相对路径处理，所以使用绝对路径的的话，“http://”协议前缀必须在。</span></span><br><span class="line">          desc: <span class="string">"你对页面的描述"</span>, <span class="comment">//摘要,如果分享到朋友圈的话，不显示摘要。</span></span><br><span class="line">          title: <span class="string">'分享卡片的标题'</span>, <span class="comment">//分享卡片标题</span></span><br><span class="line">          link: link, <span class="comment">//分享出去后的链接，这里可以将链接设置为另一个页面。</span></span><br><span class="line">          success: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="comment">//分享成功后的回调函数</span></span><br><span class="line">          &#125;,</span><br><span class="line">          cancel: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; </span><br><span class="line">              <span class="comment">// 用户取消分享后执行的回调函数</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 需要去公众平台获取以下必填参数</span></span><br><span class="line">        wx.config(&#123;</span><br><span class="line">          debug: <span class="literal">true</span>, <span class="comment">// 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。</span></span><br><span class="line">          appId: <span class="string">''</span>, <span class="comment">// 必填，公众号的唯一标识</span></span><br><span class="line">          timestamp: <span class="string">''</span>, <span class="comment">// 必填，生成签名的时间戳</span></span><br><span class="line">          nonceStr: <span class="string">''</span>, <span class="comment">// 必填，生成签名的随机串</span></span><br><span class="line">          signature: <span class="string">''</span>,<span class="comment">// 必填，签名</span></span><br><span class="line">          jsApiList: [onMenuShareAppMessage, onMenuShareTimeline, onMenuShareQQ] <span class="comment">// 必填，需要使用的JS接口列表</span></span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 进行调用</span></span><br><span class="line">        wx.ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">          wx.onMenuShareAppMessage(share_config.share);<span class="comment">//分享给好友</span></span><br><span class="line">          wx.onMenuShareTimeline(share_config.share);<span class="comment">//分享到朋友圈</span></span><br><span class="line">          wx.onMenuShareQQ(share_config.share);<span class="comment">//分享给手机QQ</span></span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在各种分享中可能会遇到以下问题：</p>
+<ol>
+<li>定制化图片不显示</li>
+<li>缓存机制导致更新定制化内容再次分享没有更新效果</li>
+<li>链接分享和SDK之间的选择</li>
+<li>SDK权限问题</li>
+<li>一定要使用分享调试器去进行调试，或者更新后的重新抓取</li>
+</ol>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>【facebook】<a href="https://developers.facebook.com/docs/sharing" target="_blank" rel="noopener">https://developers.facebook.com/docs/sharing</a></p>
+<p>【whatsapp】<a href="https://stackoverflow.com/questions/19778620/provide-an-image-for-whatsapp-link-sharing?noredirect=1&amp;lq=1" target="_blank" rel="noopener">https://stackoverflow.com/questions/19778620/provide-an-image-for-whatsapp-link-sharing?noredirect=1&amp;lq=1</a>         </p>
+<p>【微信】<a href="http://caibaojian.com/wxshare-config.html" target="_blank" rel="noopener">http://caibaojian.com/wxshare-config.html</a></p>
+<p>【推特】<a href="https://cards-dev.twitter.com/validator" target="_blank" rel="noopener">https://cards-dev.twitter.com/validator</a></p>
+<p>【领英官方】[<a href="https://docs.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin?context=linkedin/consumer/context#create-an-article-or-url-share]" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin?context=linkedin/consumer/context#create-an-article-or-url-share]</a>(</p>
+
+      
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+            -------------本文结束
+            <i class="fa fa-paw"></i>
+            感谢您的阅读-------------
+        </div>
+    
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请我吃辣条吖~</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatreward.png" alt="Murphy 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipayreward.png" alt="Murphy 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web/" rel="tag"># web</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/07/20/3 动态加载组件的webpack配置/" rel="next" title="【Bug】动态引入组件的打包报错问题">
+                <i class="fa fa-chevron-left"></i> 【Bug】动态引入组件的打包报错问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/07/20/5 手机号码输入添加空格/" rel="prev" title="【记】手机号码输入断位空格">
+                【记】手机号码输入断位空格 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://upload-images.jianshu.io/upload_images/11152416-86dc3a91b20447be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Murphy">
+            
+              <p class="site-author-name" itemprop="name">Murphy</p>
+              <p class="site-description motion-element" itemprop="description">我是最棒的吖~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/klmhly" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:2743163143@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/3892174015?is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录大纲"><span class="nav-number">1.</span> <span class="nav-text">目录大纲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景需求"><span class="nav-number">2.</span> <span class="nav-text">背景需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例"><span class="nav-number">3.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理和探索"><span class="nav-number">4.</span> <span class="nav-text">原理和探索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开放图谱"><span class="nav-number">4.1.</span> <span class="nav-text">开放图谱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分享调试器"><span class="nav-number">4.2.</span> <span class="nav-text">分享调试器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体分享方式以及存在问题"><span class="nav-number">5.</span> <span class="nav-text">具体分享方式以及存在问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#facebook"><span class="nav-number">5.1.</span> <span class="nav-text">facebook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#messenger-打开app分享"><span class="nav-number">5.2.</span> <span class="nav-text">messenger  [打开app分享]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#whatsapp-打开app分享"><span class="nav-number">5.3.</span> <span class="nav-text">whatsapp [打开app分享]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制链接分享"><span class="nav-number">5.4.</span> <span class="nav-text">复制链接分享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二维码"><span class="nav-number">5.5.</span> <span class="nav-text">二维码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#twitter"><span class="nav-number">5.6.</span> <span class="nav-text">twitter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linkedin"><span class="nav-number">5.7.</span> <span class="nav-text">Linkedin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pinterest"><span class="nav-number">5.8.</span> <span class="nav-text">pinterest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新浪微博"><span class="nav-number">5.9.</span> <span class="nav-text">新浪微博</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qq空间"><span class="nav-number">5.10.</span> <span class="nav-text">qq空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tumblr"><span class="nav-number">5.11.</span> <span class="nav-text">Tumblr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reddit"><span class="nav-number">5.12.</span> <span class="nav-text">Reddit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#微信-朋友圈-qq"><span class="nav-number">5.13.</span> <span class="nav-text">微信  / 朋友圈 /qq</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.14.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">5.15.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Murphy</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
