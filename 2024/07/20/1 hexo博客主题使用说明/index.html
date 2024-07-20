@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=5.1.4">
+
+
+
+
+
+
+
+  <meta name="keywords" content="Hexo,Git,Node,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="记录hexo搭建所需的环境，以及主要过程。">
+<meta name="keywords" content="Hexo,Git,Node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1 Hexo博客搭建说明">
+<meta property="og:url" content="http://yoursite.com/2024/07/20/1 hexo博客主题使用说明/index.html">
+<meta property="og:site_name" content="Murphy&#39;s Blog">
+<meta property="og:description" content="记录hexo搭建所需的环境，以及主要过程。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2024-07-20T01:34:02.464Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1 Hexo博客搭建说明">
+<meta name="twitter:description" content="记录hexo搭建所需的环境，以及主要过程。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2024/07/20/1 hexo博客主题使用说明/">
+
+
+
+
+
+  <title>1 Hexo博客搭建说明 | Murphy's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband">
+    </div>
+    
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Murphy's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">为了更好的吃喝玩乐，要坚持不懈的敲代码吖~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+
+<script>
+
+    window.onload = function(){
+        var path = 'https://malizhi.cn'; //这里要改成你博客的地址
+        var localhostItem = String(window.location).split(path)[1];
+        var LiNode = document.querySelectorAll('#menu > li > a')
+
+        for(var i = 0; i< LiNode.length;i++){
+            var item = String(LiNode[i].href).split(path)[1];
+            if(item == localhostItem && item != undefined){
+                LiNode[i].setAttribute('style','border-bottom:1px solid black');
+            }
+        }
+    };
+
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/07/20/1 hexo博客主题使用说明/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Murphy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://upload-images.jianshu.io/upload_images/11152416-86dc3a91b20447be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Murphy's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">1 Hexo博客搭建说明</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-07-20T09:34:02+08:00">
+                2024-07-20
+              </time>
+            
+
+          
+
+
+          
+
+            
+
+         
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/博客搭建/" itemprop="url" rel="index">
+                    <span itemprop="name">博客搭建</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录hexo搭建所需的环境，以及主要过程。<br><a id="more"></a></p>
+<h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><blockquote>
+<p>需要保证电脑安装了以下环境，才能搭建和使用hexo博客</p>
+</blockquote>
+<ul>
+<li>Node      安装地址：<a href="https://nodejs.org/zh-cn/" target="_blank" rel="noopener">官网</a></li>
+<li>Git  安装地址：<a href="https://git-scm.com/" target="_blank" rel="noopener">官网</a></li>
+<li><p>Hexo</p>
+<ol>
+<li>创建文件夹，例如BLOG（用来存放博客）</li>
+<li>在git bash终端输入安装命令：<code>$ npm i -g hexo</code></li>
+<li>查看安装版本：<code>npm -v</code></li>
+</ol>
+</li>
+</ul>
+<h2 id="本地配置过程"><a href="#本地配置过程" class="headerlink" title="本地配置过程"></a>本地配置过程</h2><blockquote>
+<p>确保第2步需要安装的环境均已安装，然后开始搭建博客。</p>
+</blockquote>
+<ul>
+<li>进入博客目录初始化hexo：<code>hexo init</code></li>
+<li>清空缓存：<code>hexo cl</code></li>
+<li>编译生成：<code>hexo g</code></li>
+<li>开启服务：<code>hexo s</code></li>
+</ul>
+<p>这一步做完，可以在浏览器输入<a href="http://localhost:4000,如果可以看到页面则已经在本地搭建好了博客" target="_blank" rel="noopener">http://localhost:4000,如果可以看到页面则已经在本地搭建好了博客</a></p>
+<h2 id="使用github托管"><a href="#使用github托管" class="headerlink" title="使用github托管"></a>使用github托管</h2><ul>
+<li>获取本电脑的ssh：<br><code>bash
+$ ssh-keygen -t rsa -C &quot;youremail@example.com</code></li>
+<li>查看公开密钥：<code>$ cat ~/.ssh/id_rsa.pub</code> </li>
+<li>在github的设置-&gt;SSH and GPG keys -&gt; SSH keys 里面添加公开密钥</li>
+<li>创建知识库：命名 [github帐号名].github.io</li>
+<li>Git 和 GitHub 进行认证(仅第一次)，输入 <code>ssh -T git@github.com</code></li>
+<li>安装部署依赖：<code>npm install hexo-deployer-git --save</code></li>
+<li><p>修改Hexo站点配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">        <span class="built_in">type</span>: git</span><br><span class="line">        repo: https://github.com/user_name/user_name.github.io.git</span><br><span class="line">        branch: master</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>清除缓存：<code>hexo clean</code></p>
+</li>
+<li>生成静态文件：<code>hexo generate</code></li>
+<li>启动服务器：<code>hexo server</code></li>
+<li>部署网站：<code>hexo deploy</code></li>
+</ul>
+<h2 id="多终端管理"><a href="#多终端管理" class="headerlink" title="多终端管理"></a>多终端管理</h2><h3 id="1-在第一台电脑博客根目录设置"><a href="#1-在第一台电脑博客根目录设置" class="headerlink" title="1.在第一台电脑博客根目录设置"></a>1.在第一台电脑博客根目录设置</h3><ul>
+<li>删除 theme 子文件夹下的 .git 文件夹</li>
+<li><p>在 Git Bash 上操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// git 初始化</span><br><span class="line">git init</span><br><span class="line">// 添加远程仓库地址</span><br><span class="line">git remote add origin https://github.com/user_name/user_name.github.io.git</span><br><span class="line">// 新建分支并切换到该分支</span><br><span class="line">git checkout -b hexo</span><br><span class="line">// 添加所有文件</span><br><span class="line">git add .</span><br><span class="line">// 提交</span><br><span class="line">git commit -m &quot;&quot;</span><br><span class="line">// 推送到远程 hexo 分支</span><br><span class="line">git push origin hexo</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 GiHub 设置 hexo 分支为默认分支</p>
+</li>
+</ul>
+<h3 id="2-在另一台电脑设置"><a href="#2-在另一台电脑设置" class="headerlink" title="2.在另一台电脑设置"></a>2.在另一台电脑设置</h3><ul>
+<li>克隆 hexo 分支到本地：git clone <a href="https://github.com/user_name/user_name.github.io.git" target="_blank" rel="noopener">https://github.com/user_name/user_name.github.io.git</a></li>
+<li>安装 Hexo：npm install -g hexo-cli</li>
+<li>不需要 Hexo 初始化，否则之前的 Hexo 配置参数将会重置</li>
+<li>安装依赖库：npm install</li>
+<li>安装部署依赖：npm install hexo -deployer-git –save</li>
+</ul>
+<h3 id="3-更新文章"><a href="#3-更新文章" class="headerlink" title="3.更新文章"></a>3.更新文章</h3><p>使用 Git Bash 在 hexo 分支下上传源文件：</p>
+<ul>
+<li>拉取更新：git pull</li>
+<li>添加文件：git add .</li>
+<li>提交：git commit -m “”</li>
+<li>推送：git push origin hexo</li>
+</ul>
+<p>使用 hexo 生成静态文件并部署网站：</p>
+<ul>
+<li>清除缓存：hexo clean</li>
+<li>生成静态文件：hexo generate</li>
+<li>部署网站：hexo deploy</li>
+</ul>
+
+      
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+            -------------本文结束
+            <i class="fa fa-paw"></i>
+            感谢您的阅读-------------
+        </div>
+    
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请我吃辣条吖~</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatreward.png" alt="Murphy 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipayreward.png" alt="Murphy 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/tags/Git/" rel="tag"># Git</a>
+          
+            <a href="/tags/Node/" rel="tag"># Node</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/07/20/2 记一次环境变量未注入排查过程/" rel="next" title="【Bug】记一次环境变量未注入排查过程">
+                <i class="fa fa-chevron-left"></i> 【Bug】记一次环境变量未注入排查过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/07/20/3 动态加载组件的webpack配置/" rel="prev" title="【Bug】动态引入组件的打包报错问题">
+                【Bug】动态引入组件的打包报错问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://upload-images.jianshu.io/upload_images/11152416-86dc3a91b20447be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Murphy">
+            
+              <p class="site-author-name" itemprop="name">Murphy</p>
+              <p class="site-description motion-element" itemprop="description">我是最棒的吖~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/klmhly" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:2743163143@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/3892174015?is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">1.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地配置过程"><span class="nav-number">2.</span> <span class="nav-text">本地配置过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用github托管"><span class="nav-number">3.</span> <span class="nav-text">使用github托管</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多终端管理"><span class="nav-number">4.</span> <span class="nav-text">多终端管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-在第一台电脑博客根目录设置"><span class="nav-number">4.1.</span> <span class="nav-text">1.在第一台电脑博客根目录设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-在另一台电脑设置"><span class="nav-number">4.2.</span> <span class="nav-text">2.在另一台电脑设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-更新文章"><span class="nav-number">4.3.</span> <span class="nav-text">3.更新文章</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Murphy</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

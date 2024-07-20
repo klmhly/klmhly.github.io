@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=5.1.4">
+
+
+
+
+
+
+
+  <meta name="keywords" content="node,vscode,tech,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="记录如何开发一个 VS code 插件的过程">
+<meta name="keywords" content="node,vscode,tech">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何开发一个 VScode 插件">
+<meta property="og:url" content="http://yoursite.com/2024/07/20/7 如何开发一个 VScode 插件/index.html">
+<meta property="og:site_name" content="Murphy&#39;s Blog">
+<meta property="og:description" content="记录如何开发一个 VS code 插件的过程">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://picture.jiaxiaoyu.cn/vscode_extention_dic.png">
+<meta property="og:updated_time" content="2024-07-20T01:34:02.467Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何开发一个 VScode 插件">
+<meta name="twitter:description" content="记录如何开发一个 VS code 插件的过程">
+<meta name="twitter:image" content="https://picture.jiaxiaoyu.cn/vscode_extention_dic.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2024/07/20/7 如何开发一个 VScode 插件/">
+
+
+
+
+
+  <title>如何开发一个 VScode 插件 | Murphy's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband">
+    </div>
+    
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Murphy's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">为了更好的吃喝玩乐，要坚持不懈的敲代码吖~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+
+<script>
+
+    window.onload = function(){
+        var path = 'https://malizhi.cn'; //这里要改成你博客的地址
+        var localhostItem = String(window.location).split(path)[1];
+        var LiNode = document.querySelectorAll('#menu > li > a')
+
+        for(var i = 0; i< LiNode.length;i++){
+            var item = String(LiNode[i].href).split(path)[1];
+            if(item == localhostItem && item != undefined){
+                LiNode[i].setAttribute('style','border-bottom:1px solid black');
+            }
+        }
+    };
+
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/07/20/7 如何开发一个 VScode 插件/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Murphy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://upload-images.jianshu.io/upload_images/11152416-86dc3a91b20447be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Murphy's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何开发一个 VScode 插件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-07-20T09:34:02+08:00">
+                2024-07-20
+              </time>
+            
+
+          
+
+
+          
+
+            
+
+         
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/vscode/" itemprop="url" rel="index">
+                    <span itemprop="name">vscode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录如何开发一个 VS code 插件的过程<br><a id="more"></a></p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p>安装环境与常用命令</p>
+<p>开发一个简单插件</p>
+<p>常用API</p>
+<p>参考文献</p>
+<h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><h5 id="环境是进行开发的前置条件"><a href="#环境是进行开发的前置条件" class="headerlink" title="环境是进行开发的前置条件"></a>环境是进行开发的前置条件</h5><ol>
+<li><p>安装 <code>yeoman</code> 脚手架工具：<code>npm i yo -g</code></p>
+</li>
+<li><p>安装 VS Code 代码生成器：<code>npm i generator-code -g</code></p>
+</li>
+<li><p>安装打包工具 <code>vsce</code>：<code>npm i vsce -g</code></p>
+</li>
+</ol>
+<h5 id="创建发布账号"><a href="#创建发布账号" class="headerlink" title="创建发布账号"></a>创建发布账号</h5><ol>
+<li><p>创建 Microsoft 账号：<a href="https://login.live.com/" target="_blank" rel="noopener">https://login.live.com/</a>     </p>
+</li>
+<li><p>通过 Microsoft 账号注册 Azure 账号：<a href="https://aka.ms/SignupAzureDevOps" target="_blank" rel="noopener">https://aka.ms/SignupAzureDevOps</a></p>
+</li>
+<li><p>创建个人令牌：在Azure 导航栏右上角菜单创建 <strong>个人访问令牌（Personal Access Tokens）</strong> </p>
+<ul>
+<li><code>Organization</code>要选择<code>all accessible organizations</code></li>
+<li><code>Scopes</code>要选择<code>Full access</code>，否则后面发布会失败</li>
+<li>创建令牌后需要本地记下来，网站不会进行保存</li>
+</ul>
+</li>
+<li><p>创建发布账号，在命令行输入<code>vsce create-publisher your-publisher-name</code></p>
+<ul>
+<li><p>your-publisher-name: 必须是数字、字母、下划线，全网唯一</p>
+</li>
+<li><p>会依次要求输入邮箱、令牌</p>
+</li>
+</ul>
+</li>
+</ol>
+<h5 id="开发和发布命令"><a href="#开发和发布命令" class="headerlink" title="开发和发布命令"></a>开发和发布命令</h5><ol>
+<li><p>创建项目脚手架</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yo code</span><br></pre></td></tr></table></figure>
+<p>脚手架包含清晰的插件开发目录和简单示例</p>
+</li>
+</ol>
+<ol start="2">
+<li><p>本地打包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vsce package</span><br></pre></td></tr></table></figure>
+<p>打包之后会生成 <code>.vsix</code> 类型的包， 此时可以在vscode里面选择安装<code>.vsix</code> 包进行本地验证，如果验证ok，即可发布到插件市场，供其他人使用。（需要修改过readme的内容）</p>
+</li>
+</ol>
+<ol start="3">
+<li><p>发布命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vsce publish</span><br></pre></td></tr></table></figure>
+<p>将插件发布到插件市场，如果已发布的版本，有修改，需要修改版本号之后再发布，发布完成，则可以在</p>
+</li>
+</ol>
+<h2 id="开发一个简单插件"><a href="#开发一个简单插件" class="headerlink" title="开发一个简单插件"></a>开发一个简单插件</h2><h5 id="首先，安装脚手架"><a href="#首先，安装脚手架" class="headerlink" title="首先，安装脚手架"></a>首先，安装脚手架</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yo code     // 目录结构如下图</span><br></pre></td></tr></table></figure>
+<p><img src="https://picture.jiaxiaoyu.cn/vscode_extention_dic.png" alt="yo 安装的脚手架开发插件"></p>
+<h5 id="主要文件："><a href="#主要文件：" class="headerlink" title="主要文件："></a>主要文件：</h5><ul>
+<li><p>Extension.js 是项目的入口文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vscode模块包含了 </span></span><br><span class="line"><span class="keyword">const</span> &#123; exec &#125; = <span class="built_in">require</span>(<span class="string">'child_process'</span>);</span><br><span class="line"><span class="keyword">const</span> vscode = <span class="built_in">require</span>(<span class="string">'vscode'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;vscode.ExtensionContext&#125; context</span></span><br><span class="line"><span class="comment"> * 仅插件被激活时调用一次</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">activate</span>(<span class="params">context</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 注册命令:helloWorld,  这个就是插件的功能，弹出一个提示框</span></span><br><span class="line">	<span class="keyword">let</span> disposable = vscode.commands.registerCommand(<span class="string">'directory.helloWorld'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		vscode.window.setStatusBarMessage(<span class="string">'你好，前端艺术家！'</span>);</span><br><span class="line">		vscode.window.showInformationMessage(<span class="string">'拍了拍你的肱二头肌，并询问是否要打开博客？'</span>, <span class="string">'是'</span>, <span class="string">'否'</span>, <span class="string">'不再提示'</span>).then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">			<span class="keyword">if</span>(result === <span class="string">'是'</span>) &#123;</span><br><span class="line">				exec(<span class="string">`open https://klmhly.github.io`</span>)</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				vscode.window.showInformationMessage(<span class="string">'祝你有个美好的工作日！'</span>)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	context.subscriptions.push(disposable);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">exports.activate = activate;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deactivate</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">	activate,</span><br><span class="line">	deactivate</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>Package.json定义相关配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 扩展的激活事件</span></span><br><span class="line"><span class="string">"activationEvents"</span>: [</span><br><span class="line">  <span class="string">"onCommand:directory.helloWorld"</span></span><br><span class="line">],</span><br><span class="line">  </span><br><span class="line"><span class="comment">//入口文件</span></span><br><span class="line"><span class="string">"main"</span>: <span class="string">"./extension.js"</span>,     </span><br><span class="line">  </span><br><span class="line"><span class="comment">// 在这里定义一系列插件命令</span></span><br><span class="line"><span class="string">"contributes"</span>: &#123;</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// 命令触发事件</span></span><br><span class="line">    <span class="string">"commands"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"command"</span>: <span class="string">"directory.helloWorld"</span>,</span><br><span class="line">        <span class="string">"title"</span>: <span class="string">"Hello World"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 键盘触发事件</span></span><br><span class="line">    <span class="string">"keybindings"</span>:&#123;</span><br><span class="line">         <span class="string">"command"</span>: <span class="string">"directory.helloWorld"</span>,</span><br><span class="line">         <span class="string">"key"</span>: <span class="string">"ctrl+f1"</span>,</span><br><span class="line">         <span class="string">"mac"</span>: <span class="string">"cmd+f1"</span>,</span><br><span class="line">         <span class="string">"when"</span>: <span class="string">"editorTextFocus"</span></span><br><span class="line">     &#125;,</span><br><span class="line">       </span><br><span class="line">     <span class="comment">// 菜单触发事件</span></span><br><span class="line">     <span class="string">"menus"</span>:&#123;</span><br><span class="line">         <span class="string">"editor/context"</span>: [</span><br><span class="line">           &#123;</span><br><span class="line">             <span class="string">"when"</span>: <span class="string">"editorFocus"</span>,</span><br><span class="line">             <span class="string">"command"</span>: <span class="string">"directory.helloWorld"</span>,</span><br><span class="line">             <span class="string">"group"</span>: <span class="string">"navigation"</span></span><br><span class="line">           &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改README.md(只需简单描述内容即可)，就可以进行本地打包了</p>
+</li>
+<li><p><code>vsce package</code> 生成 directory-0.0.2.vsix 是本地构建生成的可安装文件</p>
+</li>
+<li><p>到此，即完成一个插件的开发</p>
+</li>
+<li><p><code>vsce publish</code> 将插件发布到vs 插件应用市场，则可以正式安装使用了</p>
+</li>
+</ul>
+<h5 id="开发总结"><a href="#开发总结" class="headerlink" title="开发总结"></a>开发总结</h5><ul>
+<li>主要配置在<code>package.json</code></li>
+<li>对<code>package.json</code>里面定义的事件，进行注册，处理函数即可实现功能</li>
+</ul>
+<h2 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h2><h4 id="1-通知和状态栏"><a href="#1-通知和状态栏" class="headerlink" title="1. 通知和状态栏"></a>1. 通知和状态栏</h4><blockquote>
+<p>可以弹出提示框</p>
+</blockquote>
+<ul>
+<li><p>Info 信息框</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vscode.window.showInformationMessage(&apos;我是info信息！&apos;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义带回掉函数的信息提示框</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vscode.window.showInformationMessage(&apos;是否打开博客&apos;, &apos;是&apos;, &apos;否&apos;, &apos;不再提示&apos;).then(result =&gt; &#123;</span><br><span class="line">	if (result === &apos;是&apos;) &#123;</span><br><span class="line">		exec(`open &apos;https:/klmhly.github.io&apos;`);</span><br><span class="line">	&#125; else if (result === &apos;不再提示&apos;) &#123;</span><br><span class="line">		// 其它操作</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Info 错误提示框</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vscode.window.showErrorMessage(&apos;我是错误信息！&apos;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="2-修改当前激活编辑器内容"><a href="#2-修改当前激活编辑器内容" class="headerlink" title="2. 修改当前激活编辑器内容"></a>2. 修改当前激活编辑器内容</h4><p>待补充</p>
+<h4 id="3-package-json-的两个主要配置"><a href="#3-package-json-的两个主要配置" class="headerlink" title="3. package.json 的两个主要配置"></a>3. package.json 的两个主要配置</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">		<span class="string">"activationEvents"</span>: [</span><br><span class="line">      	<span class="string">"onCommand:directory.helloWorld"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"main"</span>: <span class="string">"./extension.js"</span>,</span><br><span class="line">    <span class="string">"contributes"</span>: &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="activationEvents-激活事件-有如下："><a href="#activationEvents-激活事件-有如下：" class="headerlink" title="activationEvents  (激活事件 有如下：)"></a>activationEvents  (激活事件 有如下：)</h4><ul>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onLanguage" target="_blank" rel="noopener"><code>onLanguage</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onCommand" target="_blank" rel="noopener"><code>onCommand</code></a> 在输入命令时触发（示例上就是这种方式）</li>
+<li><code>*</code>  每当VS Code启动时，都会发出*激活事件</li>
+<li><code>onDebug</code><ul>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onDebugInitialConfigurations" target="_blank" rel="noopener"><code>onDebugInitialConfigurations</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onDebugResolve" target="_blank" rel="noopener"><code>onDebugResolve</code></a></li>
+</ul>
+</li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#workspaceContains" target="_blank" rel="noopener"><code>workspaceContains</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onFileSystem" target="_blank" rel="noopener"><code>onFileSystem</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onView" target="_blank" rel="noopener"><code>onView</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onUri" target="_blank" rel="noopener"><code>onUri</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onWebviewPanel" target="_blank" rel="noopener"><code>onWebviewPanel</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onCustomEditor" target="_blank" rel="noopener"><code>onCustomEditor</code></a> </li>
+<li><a href="https://code.visualstudio.com/api/references/activation-events#onStartupFinished" target="_blank" rel="noopener"><code>onStartupFinished</code></a></li>
+</ul>
+<h4 id="contributes-（贡献点）的可配置项如下"><a href="#contributes-（贡献点）的可配置项如下" class="headerlink" title="contributes （贡献点）的可配置项如下"></a>contributes （贡献点）的可配置项如下</h4><ul>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.configuration" target="_blank" rel="noopener"><code>configuration</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.configurationDefaults" target="_blank" rel="noopener"><code>configurationDefaults</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.commands" target="_blank" rel="noopener"><code>commands</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.menus" target="_blank" rel="noopener"><code>menus</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.keybindings" target="_blank" rel="noopener"><code>keybindings</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.languages" target="_blank" rel="noopener"><code>languages</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.debuggers" target="_blank" rel="noopener"><code>debuggers</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.breakpoints" target="_blank" rel="noopener"><code>breakpoints</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.grammars" target="_blank" rel="noopener"><code>grammars</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.themes" target="_blank" rel="noopener"><code>themes</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.iconThemes" target="_blank" rel="noopener"><code>iconThemes</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.productIconThemes" target="_blank" rel="noopener"><code>productIconThemes</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.snippets" target="_blank" rel="noopener"><code>snippets</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.jsonValidation" target="_blank" rel="noopener"><code>jsonValidation</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.views" target="_blank" rel="noopener"><code>views</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.viewsWelcome" target="_blank" rel="noopener"><code>viewsWelcome</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.viewsContainers" target="_blank" rel="noopener"><code>viewsContainers</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.problemMatchers" target="_blank" rel="noopener"><code>problemMatchers</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.problemPatterns" target="_blank" rel="noopener"><code>problemPatterns</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.taskDefinitions" target="_blank" rel="noopener"><code>taskDefinitions</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.colors" target="_blank" rel="noopener"><code>colors</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.typescriptServerPlugins" target="_blank" rel="noopener"><code>typescriptServerPlugins</code></a></li>
+<li><a href="https://code.visualstudio.com/api/references/contribution-points#contributes.resourceLabelFormatters" target="_blank" rel="noopener"><code>resourceLabelFormatters</code></a></li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>【快速入门博客】<a href="https://juejin.im/entry/6844903640826642440" target="_blank" rel="noopener">https://juejin.im/entry/6844903640826642440</a></li>
+<li>【<a href="https://www.cnblogs.com/liuxianan/" target="_blank" rel="noopener">小茗同学的博客园</a>】<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html</a></li>
+<li>【jsliang的github】<a href="https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6" target="_blank" rel="noopener">https://github.com/LiangJunrong/all-for-one/tree/master/005-VS%20Code%20%E6%8F%92%E4%BB%B6</a></li>
+<li>【vs code api】 <a href="https://code.visualstudio.com/api/references/vscode-api" target="_blank" rel="noopener">https://code.visualstudio.com/api/references/vscode-api</a></li>
+</ul>
+
+      
+    </div>
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+            -------------本文结束
+            <i class="fa fa-paw"></i>
+            感谢您的阅读-------------
+        </div>
+    
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请我吃辣条吖~</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatreward.png" alt="Murphy 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipayreward.png" alt="Murphy 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node/" rel="tag"># node</a>
+          
+            <a href="/tags/vscode/" rel="tag"># vscode</a>
+          
+            <a href="/tags/tech/" rel="tag"># tech</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/07/20/4 PM2是什么/" rel="next" title="【Study】PM2是什么">
+                <i class="fa fa-chevron-left"></i> 【Study】PM2是什么
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/07/20/8-ceshi/" rel="prev" title="8 ceshi">
+                8 ceshi <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://upload-images.jianshu.io/upload_images/11152416-86dc3a91b20447be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Murphy">
+            
+              <p class="site-author-name" itemprop="name">Murphy</p>
+              <p class="site-description motion-element" itemprop="description">我是最棒的吖~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/klmhly" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:2743163143@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/3892174015?is_all=1" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">2.</span> <span class="nav-text">安装环境</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#环境是进行开发的前置条件"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">环境是进行开发的前置条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建发布账号"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">创建发布账号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#开发和发布命令"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">开发和发布命令</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#开发一个简单插件"><span class="nav-number">3.</span> <span class="nav-text">开发一个简单插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#首先，安装脚手架"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">首先，安装脚手架</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#主要文件："><span class="nav-number">3.0.0.2.</span> <span class="nav-text">主要文件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#开发总结"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">开发总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用API"><span class="nav-number">4.</span> <span class="nav-text">常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-通知和状态栏"><span class="nav-number">4.0.1.</span> <span class="nav-text">1. 通知和状态栏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-修改当前激活编辑器内容"><span class="nav-number">4.0.2.</span> <span class="nav-text">2. 修改当前激活编辑器内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-package-json-的两个主要配置"><span class="nav-number">4.0.3.</span> <span class="nav-text">3. package.json 的两个主要配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#activationEvents-激活事件-有如下："><span class="nav-number">4.0.4.</span> <span class="nav-text">activationEvents  (激活事件 有如下：)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#contributes-（贡献点）的可配置项如下"><span class="nav-number">4.0.5.</span> <span class="nav-text">contributes （贡献点）的可配置项如下</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Murphy</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
