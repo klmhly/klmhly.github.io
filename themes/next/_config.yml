@@ -224,7 +224,12 @@ auto_excerpt:
 post_meta:
   item_text: true
   created_at: true
-  updated_at: false
+  # 主要是这一部分
+  updated_at:
+    # 显示更新时间
+    enable: true
+    # 与创建时间不同时才显示
+    another_day: true
   categories: true
 
 # Post wordcount display settings
