@@ -62,7 +62,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,Git,Node,">
+  <meta name="keywords" content="Node,Hexo,Git,">
 
 
 
@@ -74,14 +74,14 @@
 
 
 <meta name="description" content="记录hexo搭建所需的环境，以及主要过程。">
-<meta name="keywords" content="Hexo,Git,Node">
+<meta name="keywords" content="Node,Hexo,Git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="1 Hexo博客搭建说明">
 <meta property="og:url" content="http://yoursite.com/2024/07/20/1 hexo博客主题使用说明/index.html">
 <meta property="og:site_name" content="Murphy&#39;s Blog">
 <meta property="og:description" content="记录hexo搭建所需的环境，以及主要过程。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2024-07-20T01:34:02.464Z">
+<meta property="og:updated_time" content="2024-07-23T12:58:46.120Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="1 Hexo博客搭建说明">
 <meta name="twitter:description" content="记录hexo搭建所需的环境，以及主要过程。">
@@ -370,13 +370,16 @@
       
 
       
-        <p>记录hexo搭建所需的环境，以及主要过程。<br><a id="more"></a></p>
+        <p>记录hexo搭建所需的环境，以及主要过程。</p>
+<a id="more"></a>
 <h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><blockquote>
 <p>需要保证电脑安装了以下环境，才能搭建和使用hexo博客</p>
 </blockquote>
 <ul>
-<li>Node      安装地址：<a href="https://nodejs.org/zh-cn/" target="_blank" rel="noopener">官网</a></li>
-<li>Git  安装地址：<a href="https://git-scm.com/" target="_blank" rel="noopener">官网</a></li>
+<li><p>Node      安装地址：<a href="https://nodejs.org/zh-cn/" target="_blank" rel="noopener">官网</a></p>
+</li>
+<li><p>Git  安装地址：<a href="https://git-scm.com/" target="_blank" rel="noopener">官网</a></p>
+</li>
 <li><p>Hexo</p>
 <ol>
 <li>创建文件夹，例如BLOG（用来存放博客）</li>
@@ -404,7 +407,7 @@ $ ssh-keygen -t rsa -C &quot;youremail@example.com</code></li>
 <li>Git 和 GitHub 进行认证(仅第一次)，输入 <code>ssh -T git@github.com</code></li>
 <li>安装部署依赖：<code>npm install hexo-deployer-git --save</code></li>
 <li><p>修改Hexo站点配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">        <span class="built_in">type</span>: git</span><br><span class="line">        repo: https://github.com/user_name/user_name.github.io.git</span><br><span class="line">        branch: master</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">      <span class="built_in">type</span>: git</span><br><span class="line">      repo: https://github.com/user_name/user_name.github.io.git</span><br><span class="line">      branch: master</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>清除缓存：<code>hexo clean</code></p>
 </li>
@@ -440,6 +443,16 @@ $ ssh-keygen -t rsa -C &quot;youremail@example.com</code></li>
 <li>生成静态文件：hexo generate</li>
 <li>部署网站：hexo deploy</li>
 </ul>
+<h2 id="容易遇到的问题"><a href="#容易遇到的问题" class="headerlink" title="容易遇到的问题"></a>容易遇到的问题</h2><ol>
+<li><p>换电脑拉取代码，重新hexo deploy， 之前的所有文章创建日期会变成当日。</p>
+<p>这是因为之前这台电脑没有记录，拉下来的被认为是本地新建</p>
+</li>
+</ol>
+<ol start="2">
+<li><p>执行<code>hexo deploy</code> 报错</p>
+<p>node版本和hexo版本不匹配， 这里将node从16降到12即可以</p>
+</li>
+</ol>
 
       
     </div>
@@ -501,11 +514,11 @@ $ ssh-keygen -t rsa -C &quot;youremail@example.com</code></li>
       
         <div class="post-tags">
           
+            <a href="/tags/Node/" rel="tag"># Node</a>
+          
             <a href="/tags/Hexo/" rel="tag"># Hexo</a>
           
             <a href="/tags/Git/" rel="tag"># Git</a>
-          
-            <a href="/tags/Node/" rel="tag"># Node</a>
           
         </div>
       
@@ -518,18 +531,14 @@ $ ssh-keygen -t rsa -C &quot;youremail@example.com</code></li>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2024/07/20/2 记一次环境变量未注入排查过程/" rel="next" title="【Bug】记一次环境变量未注入排查过程">
-                <i class="fa fa-chevron-left"></i> 【Bug】记一次环境变量未注入排查过程
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2024/07/20/3 动态加载组件的webpack配置/" rel="prev" title="【Bug】动态引入组件的打包报错问题">
-                【Bug】动态引入组件的打包报错问题 <i class="fa fa-chevron-right"></i>
+              <a href="/2024/07/20/2 记一次环境变量未注入排查过程/" rel="prev" title="【Bug】记一次环境变量未注入排查过程">
+                【Bug】记一次环境变量未注入排查过程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -689,7 +698,7 @@ $ ssh-keygen -t rsa -C &quot;youremail@example.com</code></li>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">1.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地配置过程"><span class="nav-number">2.</span> <span class="nav-text">本地配置过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用github托管"><span class="nav-number">3.</span> <span class="nav-text">使用github托管</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多终端管理"><span class="nav-number">4.</span> <span class="nav-text">多终端管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-在第一台电脑博客根目录设置"><span class="nav-number">4.1.</span> <span class="nav-text">1.在第一台电脑博客根目录设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-在另一台电脑设置"><span class="nav-number">4.2.</span> <span class="nav-text">2.在另一台电脑设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-更新文章"><span class="nav-number">4.3.</span> <span class="nav-text">3.更新文章</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装环境"><span class="nav-number">1.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地配置过程"><span class="nav-number">2.</span> <span class="nav-text">本地配置过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用github托管"><span class="nav-number">3.</span> <span class="nav-text">使用github托管</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多终端管理"><span class="nav-number">4.</span> <span class="nav-text">多终端管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-在第一台电脑博客根目录设置"><span class="nav-number">4.1.</span> <span class="nav-text">1.在第一台电脑博客根目录设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-在另一台电脑设置"><span class="nav-number">4.2.</span> <span class="nav-text">2.在另一台电脑设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-更新文章"><span class="nav-number">4.3.</span> <span class="nav-text">3.更新文章</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容易遇到的问题"><span class="nav-number">5.</span> <span class="nav-text">容易遇到的问题</span></a></li></ol></div>
             
 
           </div>
